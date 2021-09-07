@@ -96,42 +96,11 @@
         }
 
         .exhibitions_container {
-            padding: 50px 30%;
+            padding: 50px 20%;
         }
 
-        @media screen and (max-width: 600px) {
-            .topnav .login-container {
-                float: none;
-            }
 
-            .topnav a, .topnav input[type=text], .topnav .login-container button {
-                float: none;
-                display: block;
-                text-align: left;
-                width: 100%;
-                margin: 0;
-                padding: 14px;
-            }
-
-            .topnav a, .topnav input[type=password], .topnav .login-container button {
-                float: none;
-                display: block;
-                text-align: left;
-                width: 100%;
-                margin: 0;
-                padding: 14px;
-            }
-
-            .topnav input[type=text] {
-                border: 1px solid #ccc;
-            }
-
-            .topnav input[type=password] {
-                border: 1px solid #ccc;
-            }
-        }
-
-        .events td {
+        .exhibitions td {
             font-size: 13pt;
             padding: 5px 10px;
 
@@ -139,7 +108,7 @@
             border-color: #404040 #919191 #404040 #919191;
         }
 
-        .events table {
+        .exhibitions table {
             caption-side: top;
 
         }
@@ -176,35 +145,47 @@
 </div>
 
 <div class="exhibitions_container">
-
     <h1>Exhibitions</h1>
 
-    <form action="controller" method="get">
-        <input name="command" type="hidden" value="getExhibitions">
-        <button type="submit">Get Exhibitions</button>
-    </form>
+    <c:choose>
+        <c:when test="${sessionScope.exhibitions == null}">
+            <form action="controller" method="get">
+                <input name="command" type="hidden" value="getExhibitions">
+                <button type="submit">Get Exhibitions</button>
+            </form>
+        </c:when>
+        <c:otherwise>
+            <form action="controller" method="get">
+                <input name="command" type="hidden" value="getExhibitions">
+                <button type="submit">Reload Exhibitions</button>
+            </form>
+
+            <table align="center" class="exhibitions" cellspacing="9">
+                <c:forEach items="${exhibitions}" var="exhibition">
+
+                    <tr>
+                        <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=316px
+                                 height=448px></td>
+                        <td><b>${exhibition.topic}</b></br>
+                                ${exhibition.description} </br>
+
+                            </br>When? From ${exhibition.startDate}
+                            to ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
+                            Where?<c:forEach items="${exhibition.locations}" var="location">   ${location.name}    ${location.address} </br>
+                            </c:forEach>
+                            Price? ${exhibition.price} UAH
+                        </td>
+                    </tr>
+
+                </c:forEach>
+
+
+            </table>
+        </c:otherwise>
+    </c:choose>
+
 
 </div>
 
-<%--<table align="center" class="events" cellspacing="9">--%>
-
-<%--    <tr>--%>
-<%--        <td><img src="Liter.png" width=316px height=448px></td>--%>
-<%--        <td width=500px>Ви чекали, ми теж, і ось, цей день настав! Сьогодні "Лампа" анонсує свою першу подію</br>--%>
-<%--            Так, нарешті, після довгих очікувань та багатогодинної праці ми нарешті готові вам розповісти!</br>--%>
-<%--            І нашою першою самостійною подією буде літературний вечір.</br>--%>
-<%--            На цьому ламповому літературнику ви зможете насолодитись творами талановитих львівських поетів, а також, за--%>
-<%--            бажанням, зможете і самі виступити.</br>--%>
-<%--            В цей холодний осінній вечір ми зможемо подарувати вам клаптик світла і тепла від лампи і дати змогу--%>
-<%--            відпочити після навчання чи роботи. Тому ми чекаємо саме тебе на нашому вечорі літературних читань, приходь--%>
-<%--            і надихнись атмосферою та мистецтвом</br>--%>
-<%--            </br></br><big>Коли? 17-го вересня 19:00</br>--%>
-<%--                Де? МолодоЗелено вул. Джерельна, 20</br>--%>
-<%--                Столик можна забронювати за телефоном: +380673783728</br>--%>
-<%--                Посилання для реєстрації поетів в описі профілю</big>--%>
-<%--        </td>--%>
-<%--    </tr>--%>
-
-<%--</table>--%>
 </body>
 </html>

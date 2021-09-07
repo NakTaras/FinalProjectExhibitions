@@ -2,9 +2,8 @@ package com.my.db.dao.impl;
 
 import com.my.db.constant.Constants;
 import com.my.db.dao.LocationDao;
+import com.my.db.entity.Exhibition;
 import com.my.db.entity.Location;
-import com.my.db.entity.User;
-import com.my.utils.PasswordEncryption;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -86,6 +85,34 @@ public class LocationDaoImpl implements LocationDao {
             System.out.println(e.getMessage());
         }
 
+        return locations;
+    }
+
+    public List<Location> getLocationsByExhibitionId(long exhibitionId){
+        List<Location> locations = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_LOCATION_BY_EXHIBITION_ID)) {
+
+            preparedStatement.setLong(1, exhibitionId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                locations.add(mapLocation(resultSet));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
         return locations;
     }
 

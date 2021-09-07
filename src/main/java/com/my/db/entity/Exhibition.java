@@ -1,8 +1,6 @@
 package com.my.db.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -10,9 +8,15 @@ public class Exhibition implements Serializable {
     private long id;
     private String topic;
     private String description;
-    private Date startDate;
-    private Date endDate;
-    private Time startTime;
+    private String startDate;
+    private String endDate;
+    private String startTime;
+    private String endTime;
+    private Timestamp startTimestamp;
+    private Timestamp endTimestamp;
+    private double price;
+    List<Location> locations;
+    private byte[] posterImg;
 
     public Timestamp getStartTimestamp() {
         return startTimestamp;
@@ -29,13 +33,6 @@ public class Exhibition implements Serializable {
     public void setEndTimestamp(Timestamp endTimestamp) {
         this.endTimestamp = endTimestamp;
     }
-
-    private Time endTime;
-    private Timestamp startTimestamp;
-    private Timestamp endTimestamp;
-    private double price;
-    List<Location> locations;
-    private byte[] posterImg;
 
     public byte[] getPosterImg() {
         return posterImg;
@@ -77,44 +74,44 @@ public class Exhibition implements Serializable {
         this.description = description;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Time getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
-
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     @Override

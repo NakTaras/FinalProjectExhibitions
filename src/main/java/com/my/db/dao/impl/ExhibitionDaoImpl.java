@@ -3,12 +3,14 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.entity.Exhibition;
+import com.my.db.entity.Location;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExhibitionDaoImpl implements ExhibitionDao {
@@ -130,10 +132,8 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         exhibition.setId(rs.getLong(Constants.SQL_FIELD_ID));
         exhibition.setTopic(rs.getString(Constants.SQL_FIELD_TOPIC));
         exhibition.setDescription(rs.getString(Constants.SQL_FIELD_DESCRIPTION));
-        exhibition.setStartDate(rs.getDate(Constants.SQL_FIELD_START_DATE));
-        exhibition.setEndDate(rs.getDate(Constants.SQL_FIELD_END_DATE));
-        exhibition.setStartTime(rs.getTime(Constants.SQL_FIELD_START_TIME));
-        exhibition.setEndTime(rs.getTime(Constants.SQL_FIELD_END_TIME));
+        exhibition.setStartTimestamp(rs.getTimestamp(Constants.SQL_FIELD_START_DATE_TIME));
+        exhibition.setEndTimestamp(rs.getTimestamp(Constants.SQL_FIELD_END_DATE_TIME));
         exhibition.setPrice(rs.getDouble(Constants.SQL_FIELD_PRICE));
         exhibition.setPosterImg(rs.getBytes(Constants.SQL_FIELD_POSTER_IMG));
 
@@ -142,7 +142,19 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
 
     @Override
     public List<Exhibition> getAllExhibitions() {
-        return null;
+        List<Exhibition> exhibitions = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_ALL_EXHIBITIONS)){
+            while (rs.next()) {
+                exhibitions.add(mapExhibition(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return exhibitions;
     }
 
     @Override

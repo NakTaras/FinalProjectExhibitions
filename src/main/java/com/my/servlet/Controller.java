@@ -31,7 +31,11 @@ public class Controller extends HttpServlet {
 
         // (3) do command
         address = command.execute(request, response);
-        response.sendRedirect(address);
+
+        if (!commandName.equals("getImg")) {
+            response.sendRedirect(address);
+        }
+
         //request.getRequestDispatcher(address).forward(request, response);
     }
 
