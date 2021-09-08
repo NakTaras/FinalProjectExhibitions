@@ -18,7 +18,6 @@ public class RegistrationCommand implements Command {
 
         UserDao userDao = UserDaoImpl.getInstance();
         boolean isAdded = userDao.saveUser(user);
-        req.setAttribute("isAdded", isAdded);
 
         if (isAdded){
             return "index.jsp";

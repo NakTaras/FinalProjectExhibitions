@@ -122,14 +122,18 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../index.jsp">Home</a>
-    <a href="registration.jsp">Registration</a>
-    <a href="../controller?command=getLocations">Add Exhibition</a>
-    <a href="addLocation.jsp">Add Location</a>
+    <a class="active" href="../../index.jsp">Home</a>
+    <a href="../registration.jsp">Registration</a>
+
+    <c:if test="${user.role == 'administrator'}">
+        <a href="../../controller?command=getLocations">Add Exhibition</a>
+        <a href="addLocation.jsp">Add Location</a>
+    </c:if>
+
     <c:choose>
         <c:when test="${sessionScope.user == null}">
             <div class="login-container">
-                <form action="../controller" method="post">
+                <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logIn">
                     <input type="text" placeholder="Login" name="login">
                     <input type="password" placeholder="Password" name="password">
@@ -139,7 +143,7 @@
         </c:when>
         <c:otherwise>
             <div class="login-container">
-                <form action="../controller" method="post">
+                <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logOut">
                     <button type="submit">Log out</button>
                 </form>

@@ -20,6 +20,6 @@ public class GetLocationCommand implements Command {
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("locations", locations);
 
-        return "jsp/addExhibition.jsp";
+        return "jsp/admin/addExhibition.jsp";
     }
 }

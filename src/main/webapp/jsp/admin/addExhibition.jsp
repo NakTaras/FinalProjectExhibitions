@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Add Location</title>
+    <title>Add Exhibition</title>
 
     <style>
         body {
@@ -86,15 +86,17 @@
             background-color: green;
         }
 
-        .add_location_container {
+        .add_exhibition_container {
             padding: 50px 30%;
         }
 
-        .add_location_container form {
+        .add_exhibition_container form {
             border: 3px solid #f1f1f1;
         }
 
-        .add_location_container input[type=text] {
+        .add_exhibition_container input[type=text], .add_exhibition_container input[type=date],
+        .add_exhibition_container input[type=time], .add_exhibition_container input[type=number],
+        .add_exhibition_container input[type=file], .add_exhibition_container select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -103,7 +105,13 @@
             box-sizing: border-box;
         }
 
-        .add_location_container button {
+        .add_exhibition_container option {
+            background-color: #04AA6D;
+            color: white;
+            font-size: 14px;
+        }
+
+        .add_exhibition_container button {
             background-color: #04AA6D;
             color: white;
             padding: 14px 20px;
@@ -113,7 +121,7 @@
             width: 100%;
         }
 
-        .add_location_container button:hover {
+        .add_exhibition_container button:hover {
             opacity: 0.8;
         }
 
@@ -122,14 +130,18 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../index.jsp">Home</a>
-    <a href="registration.jsp">Registration</a>
-    <a href="../controller?command=getLocations">Add Exhibition</a>
-    <a href="addLocation.jsp">Add Location</a>
+    <a class="active" href="../../index.jsp">Home</a>
+    <a href="../registration.jsp">Registration</a>
+
+    <c:if test="${user.role == 'administrator'}">
+        <a href="../../controller?command=getLocations">Add Exhibition</a>
+        <a href="addLocation.jsp">Add Location</a>
+    </c:if>
+
     <c:choose>
         <c:when test="${sessionScope.user == null}">
             <div class="login-container">
-                <form action="../controller" method="post">
+                <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logIn">
                     <input type="text" placeholder="Login" name="login">
                     <input type="password" placeholder="Password" name="password">
@@ -139,7 +151,7 @@
         </c:when>
         <c:otherwise>
             <div class="login-container">
-                <form action="../controller" method="post">
+                <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logOut">
                     <button type="submit">Log out</button>
                 </form>
@@ -148,20 +160,46 @@
         </c:otherwise>
     </c:choose>
 </div>
-<h1>Add Location</h1>
+<h1>Add Exhibition</h1>
 <hr>
-<form action="../controller" method="post">
-    <div class="add_location_container">
-        <input name="command" type="hidden" value="addLocation">
+<form action="../controller" method="post" enctype="multipart/form-data">
+    <div class="add_exhibition_container">
+        <input name="command" type="hidden" value="addExhibition">
 
-        <label>Name</label>
-        <input type="text" name="locationName" placeholder="Enter Name">
+        <label>Topic</label>
+        <input type="text" name="topic" placeholder="Enter Topic">
 
-        <label>Address</label>
-        <input type="text" name="locationAddress" placeholder="Enter Address">
+        <label>Description</label>
+        <input type="text" name="description" placeholder="Enter Description">
 
-        <button type="submit">Create Location</button>
-    </div>
+        <label>Start Date</label>
+        <input type="date" name="startDate">
+
+        <label>End Date</label>
+        <input type="date" name="endDate">
+
+        <label>Start Time</label>
+        <input type="time" name="startTime">
+
+        <label>End Time</label>
+        <input type="time" name="endTime">
+
+        <label>Price</label>
+        <input type="number" name="price" step="0.01" placeholder="0.00">
+
+        <label>Locations</label><br>
+        <select name="chosenLocations" multiple="multiple">
+            <c:forEach items="${locations}" var="location">
+                <option value="${location.id}">${location.name}</option><br>
+            </c:forEach>
+
+        </select><br>
+
+       <label>Poster</label>
+       <input type="file" name="posterImg" accept="image/*">
+
+       <button type="submit">Log up</button>
+   </div>
 </form>
 </body>
 </html>
