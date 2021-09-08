@@ -14,4 +14,6 @@ public interface ExhibitionDao {
     List<Exhibition> getAllExhibitions();
 
     void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws SQLException;
+
+    void cancelExhibitionById(long id) throws SQLException;
 }

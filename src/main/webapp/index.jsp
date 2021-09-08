@@ -167,6 +167,8 @@
             <table align="center" class="exhibitions" cellspacing="9">
                 <c:forEach items="${exhibitions}" var="exhibition">
 
+                    <c:if test="${exhibition.status == 1}">
+
                     <tr>
                         <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=316px
                                  height=448px></td>
@@ -175,11 +177,33 @@
 
                             </br>When? From ${exhibition.startDate}
                             to ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
-                            Where?<c:forEach items="${exhibition.locations}" var="location">   ${location.name}    ${location.address} </br>
+                            Where?<c:forEach items="${exhibition.locations}"
+                                             var="location">   ${location.name}    ${location.address} </br>
                             </c:forEach>
                             Price? ${exhibition.price} UAH
+                            <c:if test="${exhibition.status == 1}">
+                                <c:if test="${user != null}">
+                                    </br></br>
+                                    <form action="controller" method="post">
+                                        <input name="command" type="hidden" value="buyTickets">
+                                        <label>How many tickets do you want to buy?</label></br>
+                                        <input type="number" name="amountOfTickets" step="1" placeholder="0">
+                                        <button type="submit">Buy Tickets</button>
+                                    </form>
+                                </c:if>
+
+                                <c:if test="${user.role == 'administrator'}">
+                                    <form action="controller" method="post">
+                                        <input name="command" type="hidden" value="cancelExhibition">
+                                        <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
+                                        <button type="submit">Cancel Exhibitions</button>
+                                    </form>
+                                </c:if>
+                            </c:if>
                         </td>
                     </tr>
+
+                    </c:if>
 
                 </c:forEach>
 

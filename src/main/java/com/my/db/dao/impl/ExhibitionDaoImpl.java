@@ -3,7 +3,6 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.entity.Exhibition;
-import com.my.db.entity.Location;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -136,6 +135,7 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         exhibition.setEndTimestamp(rs.getTimestamp(Constants.SQL_FIELD_END_DATE_TIME));
         exhibition.setPrice(rs.getDouble(Constants.SQL_FIELD_PRICE));
         exhibition.setPosterImg(rs.getBytes(Constants.SQL_FIELD_POSTER_IMG));
+        exhibition.setStatus(rs.getInt(Constants.SQL_FIELD_STATUS));
 
         return exhibition;
     }
@@ -180,6 +180,20 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
                     System.out.println(ex.getMessage());
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelExhibitionById(long id) throws SQLException {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_CANCEL_EXHIBITION_BY_ID)){
+
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new SQLException(e);
         }
     }
 }

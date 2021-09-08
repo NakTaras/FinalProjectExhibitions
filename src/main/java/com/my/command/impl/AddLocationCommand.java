@@ -25,6 +25,6 @@ public class AddLocationCommand implements Command {
             return "error.jsp";
         }
 
-        return "jsp/addLocation.jsp";
+        return "jsp/admin/addLocation.jsp";
     }
 }

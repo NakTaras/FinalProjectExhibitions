@@ -17,6 +17,7 @@ public class Exhibition implements Serializable {
     private double price;
     List<Location> locations;
     private byte[] posterImg;
+    private int status;
 
     public Timestamp getStartTimestamp() {
         return startTimestamp;
@@ -112,6 +113,14 @@ public class Exhibition implements Serializable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

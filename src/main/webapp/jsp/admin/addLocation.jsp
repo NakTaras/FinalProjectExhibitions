@@ -154,7 +154,7 @@
 </div>
 <h1>Add Location</h1>
 <hr>
-<form action="../controller" method="post">
+<form action="../../controller" method="post">
     <div class="add_location_container">
         <input name="command" type="hidden" value="addLocation">
 

@@ -11,6 +11,7 @@ public class Constants {
     public static final String SQL_FIELD_END_DATE_TIME = "end_date_time";
     public static final String SQL_FIELD_PRICE = "price";
     public static final String SQL_FIELD_POSTER_IMG = "poster_img";
+    public static final String SQL_FIELD_STATUS = "status";
 
 
     public static final String SQL_ADD_USER = "INSERT INTO user (login, password, role_id) VALUES (?, ?, (SELECT id FROM role WHERE name = ?));";
@@ -22,4 +23,5 @@ public class Constants {
     public static final String SQL_ADD_ROW_TO_EXHIBITION_HAS_LOCATION = "INSERT INTO exhibition_has_location (exhibition_id, location_id) VALUES (?, ?);";
     public static final String SQL_GET_LOCATION_BY_EXHIBITION_ID = "SELECT id, name, address FROM location INNER JOIN exhibition_has_location ehl on location.id = ehl.location_id WHERE exhibition_id = ?;";
     public static final String SQL_GET_ALL_EXHIBITIONS = "SELECT * FROM exhibition;";
+    public static final String SQL_CANCEL_EXHIBITION_BY_ID = "UPDATE exhibition SET status = 0 WHERE id = ?;";
 }

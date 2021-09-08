@@ -20,6 +20,7 @@ public class CommandContainer {
         commands.put("getLocations", new GetLocationCommand());
         commands.put("getExhibitions", new GetExhibitionsCommand());
         commands.put("getImg", new GetImgCommand());
+        commands.put("cancelExhibition", new CancelExhibitionCommand());
     }
 
     public static Command getCommand(String commandName) {

@@ -162,7 +162,7 @@
 </div>
 <h1>Add Exhibition</h1>
 <hr>
-<form action="../controller" method="post" enctype="multipart/form-data">
+<form action="../../controller" method="post" enctype="multipart/form-data">
     <div class="add_exhibition_container">
         <input name="command" type="hidden" value="addExhibition">
 
