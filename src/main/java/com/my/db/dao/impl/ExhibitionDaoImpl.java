@@ -3,10 +3,8 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.entity.Exhibition;
+import com.my.util.DataSourceUtil;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,21 +12,11 @@ import java.util.List;
 
 public class ExhibitionDaoImpl implements ExhibitionDao {
 
-    private static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/final_project";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
-
     private static ExhibitionDaoImpl instance;
     private DataSource dataSource;
 
     private ExhibitionDaoImpl() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/TestDB");
-        } catch (NamingException ex) {
-            throw new IllegalStateException("Cannot init DBManager", ex);
-        }
+        dataSource = DataSourceUtil.getDataSource();
     }
 
     public static synchronized ExhibitionDaoImpl getInstance() {

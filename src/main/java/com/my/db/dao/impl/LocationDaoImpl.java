@@ -2,12 +2,9 @@ package com.my.db.dao.impl;
 
 import com.my.db.constant.Constants;
 import com.my.db.dao.LocationDao;
-import com.my.db.entity.Exhibition;
 import com.my.db.entity.Location;
+import com.my.util.DataSourceUtil;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,13 +16,7 @@ public class LocationDaoImpl implements LocationDao {
     private DataSource dataSource;
 
     private LocationDaoImpl() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/TestDB");
-        } catch (NamingException ex) {
-            throw new IllegalStateException("Cannot init DBManager", ex);
-        }
+        dataSource = DataSourceUtil.getDataSource();
     }
 
     public static synchronized LocationDaoImpl getInstance() {

@@ -3,32 +3,20 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.UserDao;
 import com.my.db.entity.User;
-import com.my.utils.PasswordEncryption;
+import com.my.util.DataSourceUtil;
+import com.my.util.PasswordEncryption;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-    private static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/final_project";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
-
     private static UserDaoImpl instance;
     private DataSource dataSource;
 
     private UserDaoImpl() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/TestDB");
-        } catch (NamingException ex) {
-            throw new IllegalStateException("Cannot init DBManager", ex);
-        }
+        dataSource = DataSourceUtil.getDataSource();
     }
 
     public static synchronized UserDaoImpl getInstance() {
