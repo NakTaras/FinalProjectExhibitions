@@ -187,7 +187,8 @@
                                     <form action="controller" method="post">
                                         <input name="command" type="hidden" value="buyTickets">
                                         <label>How many tickets do you want to buy?</label></br>
-                                        <input type="number" name="amountOfTickets" step="1" placeholder="0">
+                                        <input type="number" name="amountOfTickets" step="1" value="1" min="1">
+                                        <input name="exhibitionId" type="hidden" value="${exhibition.id}">
                                         <button type="submit">Buy Tickets</button>
                                     </form>
                                 </c:if>

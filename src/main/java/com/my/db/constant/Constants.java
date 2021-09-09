@@ -24,4 +24,5 @@ public class Constants {
     public static final String SQL_GET_LOCATION_BY_EXHIBITION_ID = "SELECT id, name, address FROM location INNER JOIN exhibition_has_location ehl on location.id = ehl.location_id WHERE exhibition_id = ?;";
     public static final String SQL_GET_ALL_EXHIBITIONS = "SELECT * FROM exhibition;";
     public static final String SQL_CANCEL_EXHIBITION_BY_ID = "UPDATE exhibition SET status = 0 WHERE id = ?;";
+    public static final String SQL_BUY_TICKETS = "INSERT INTO user_has_exhibition (user_id, exhibition_id, amount_of_bought_tickets) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE amount_of_bought_tickets = user_has_exhibition.amount_of_bought_tickets + ?;";
 }

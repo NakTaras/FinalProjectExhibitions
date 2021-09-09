@@ -21,6 +21,7 @@ public class CommandContainer {
         commands.put("getExhibitions", new GetExhibitionsCommand());
         commands.put("getImg", new GetImgCommand());
         commands.put("cancelExhibition", new CancelExhibitionCommand());
+        commands.put("buyTickets", new BuyTicketsCommand());
     }
 
     public static Command getCommand(String commandName) {

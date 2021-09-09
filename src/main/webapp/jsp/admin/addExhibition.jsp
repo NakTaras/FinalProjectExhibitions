@@ -185,7 +185,7 @@
         <input type="time" name="endTime">
 
         <label>Price</label>
-        <input type="number" name="price" step="0.01" placeholder="0.00">
+        <input type="number" name="price" step="0.01" placeholder="0.00" min="0.01">
 
         <label>Locations</label><br>
         <select name="chosenLocations" multiple="multiple">
@@ -198,7 +198,7 @@
        <label>Poster</label>
        <input type="file" name="posterImg" accept="image/*">
 
-       <button type="submit">Log up</button>
+       <button type="submit">Create Exhibition</button>
    </div>
 </form>
 </body>

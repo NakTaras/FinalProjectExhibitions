@@ -2,9 +2,7 @@ package com.my.command.impl;
 
 import com.my.command.Command;
 import com.my.db.dao.LocationDao;
-import com.my.db.dao.UserDao;
 import com.my.db.dao.impl.LocationDaoImpl;
-import com.my.db.dao.impl.UserDaoImpl;
 import com.my.db.entity.Location;
 
 import javax.servlet.http.HttpServletRequest;

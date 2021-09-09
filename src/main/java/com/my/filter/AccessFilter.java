@@ -1,4 +1,4 @@
-package com.my.command.filter;
+package com.my.filter;
 
 import com.my.db.entity.User;
 

@@ -112,4 +112,23 @@ public class UserDaoImpl implements UserDao {
         user.setRole(rs.getString(Constants.SQL_FIELD_NAME));
         return user;
     }
+
+    @Override
+    public void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws SQLException {
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_BUY_TICKETS)) {
+            int i = 1;
+            preparedStatement.setLong(i++, userId);
+            preparedStatement.setLong(i++, exhibitionId);
+            preparedStatement.setInt(i++, amountOfTickets);
+            preparedStatement.setInt(i, amountOfTickets);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new SQLException(e);
+        }
+
+    }
 }
