@@ -1,5 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:if test="${empty language}">
+    <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <fmt:setLocale value="${language}" scope="session"/>
+</c:if>
+
+<fmt:setBundle basename="resources"/>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +63,10 @@
         }
 
         .topnav .login-container {
+            float: right;
+        }
+
+        .change-language {
             float: right;
         }
 
@@ -122,7 +138,7 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../../index.jsp">Home</a>
+    <a class="active" href="../../index.jsp"><fmt:message key='topnav.menu.home'/></a>
     <a href="../registration.jsp">Registration</a>
 
     <c:if test="${user.role == 'administrator'}">
@@ -151,6 +167,26 @@
             </div>
         </c:otherwise>
     </c:choose>
+
+    <div class="change-language">
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'en'}">
+                <a class="active" href="">ENG</a>
+            </c:when>
+            <c:otherwise>
+                <a href="../../controller?command=chooseLanguage&language=en">ENG</a>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'uk'}">
+                <a class="active" href="">УКР</a>
+            </c:when>
+            <c:otherwise>
+                <a href="../../controller?command=chooseLanguage&language=uk">УКР</a>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
 </div>
 <h1>Add Location</h1>
 <hr>

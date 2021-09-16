@@ -1,5 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:if test="${empty language}">
+    <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <fmt:setLocale value="${language}" scope="session"/>
+</c:if>
+
+<fmt:setBundle basename="resources"/>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +27,6 @@
         h1 {
             text-align: center;
         }
-
 
         .topnav .logged_user {
             padding: 6px;
@@ -48,6 +59,10 @@
         .topnav a.active {
             background-color: green;
             color: white;
+        }
+
+        .change-language {
+            float: right;
         }
 
         .topnav .login-container {
@@ -91,7 +106,7 @@
         }
 
         .registration_container form {
-            border: 3px solid #f1f1f1;
+            border: 3px solid;
         }
 
         .registration_container input[type=text], .registration_container input[type=password] {
@@ -122,49 +137,66 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../index.jsp">Home</a>
+    <a class="active" href="../index.jsp"><fmt:message key='topnav.menu.home'/></a>
     <a href="registration.jsp">Registration</a>
 
     <c:if test="${user.role == 'administrator'}">
-        <a href="../controller?command=getLocations">Add Exhibition</a>
-        <a href="admin/addLocation.jsp">Add Location</a>
+    <a href="../controller?command=getLocations">Add Exhibition</a>
+    <a href="admin/addLocation.jsp">Add Location</a>
     </c:if>
 
     <c:choose>
-        <c:when test="${sessionScope.user == null}">
-            <div class="login-container">
-                <form action="../controller" method="get">
-                    <input name="command" type="hidden" value="logIn">
-                    <input type="text" placeholder="Login" name="login">
-                    <input type="password" placeholder="Password" name="password">
-                    <button type="submit">Login</button>
-                </form>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="login-container">
-                <form action="../controller" method="get">
-                    <input name="command" type="hidden" value="logOut">
-                    <button type="submit">Log out</button>
-                </form>
-                <div class="logged_user"> You are logged as ${sessionScope.user.role}</div>
-            </div>
-        </c:otherwise>
-    </c:choose>
-</div>
-<h1>Current User: ${sessionScope.user.login}
-</h1>
-${isAdded == null ? "" : "<h1>User was not added</h1>"}
-<h1>Users registration</h1>
-<hr>
-<form action="../controller" method="post">
-    <div class="registration_container">
-        <input name="command" type="hidden" value="registration">
-        <input name="role" type="hidden" value="client">
-        <input type="text" name="login" placeholder="Enter Username">
-        <input type="password" name="password" placeholder="Enter Password">
-        <button type="submit">Log up</button>
+    <c:when test="${sessionScope.user == null}">
+    <div class="login-container">
+        <form action="../controller" method="get">
+            <input name="command" type="hidden" value="logIn">
+            <input type="text" placeholder="Login" name="login">
+            <input type="password" placeholder="Password" name="password">
+            <button type="submit">Login</button>
+        </form>
     </div>
-</form>
+    </c:when>
+    <c:otherwise>
+    <div class="login-container">
+        <form action="../controller" method="get">
+            <input name="command" type="hidden" value="logOut">
+            <button type="submit">Log out</button>
+        </form>
+        <div class="logged_user"> You are logged as ${sessionScope.user.role}</div>
+    </div>
+    </c:otherwise>
+    </c:choose>
+
+    <div class="change-language">
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'en'}">
+                <a class="active" href="">ENG</a>
+            </c:when>
+            <c:otherwise>
+                <a href="../controller?command=chooseLanguage&language=en">ENG</a>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'uk'}">
+                <a class="active" href="">УКР</a>
+            </c:when>
+            <c:otherwise>
+                <a href="../controller?command=chooseLanguage&language=uk">УКР</a>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+</div>
+    <h1>Users registration</h1>
+    <hr>
+    <form action="../controller" method="post">
+        <div class="registration_container">
+            <input name="command" type="hidden" value="registration">
+            <input name="role" type="hidden" value="client">
+            <input type="text" name="login" placeholder="Enter Username">
+            <input type="password" name="password" placeholder="Enter Password">
+            <button type="submit">Log up</button>
+        </div>
+    </form>
 </body>
 </html>

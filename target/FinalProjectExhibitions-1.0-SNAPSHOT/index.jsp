@@ -1,7 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:if test="${empty language}">
+    <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <fmt:setLocale value="${language}" scope="session"/>
+</c:if>
+
+<fmt:setBundle basename="resources"/>
+
+
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <meta charset="utf-8">
     <title>Exhibitions</title>
@@ -47,6 +59,10 @@
         .topnav a.active {
             background-color: green;
             color: white;
+        }
+
+        .change-language {
+            float: right;
         }
 
         .topnav .login-container {
@@ -116,23 +132,25 @@
 
 </head>
 <body>
+
 <div class="topnav">
-    <a class="active" href="index.jsp">Home</a>
-    <a href="jsp/registration.jsp">Registration</a>
+    <a class="active" href="index.jsp"><fmt:message key='topnav.menu.home'/></a>
+    <a href="jsp/registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
-        <a href="controller?command=getLocations">Add Exhibition</a>
-        <a href="jsp/admin/addLocation.jsp">Add Location</a>
+        <a href="controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
+        <a href="jsp/admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
     </c:if>
+
 
     <c:choose>
         <c:when test="${sessionScope.user == null}">
             <div class="login-container">
                 <form action="controller" method="get">
                     <input name="command" type="hidden" value="logIn">
-                    <input type="text" placeholder="Login" name="login">
-                    <input type="password" placeholder="Password" name="password">
-                    <button type="submit">Login</button>
+                    <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
+                    <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
+                    <button type="submit"><fmt:message key='topnav.button.login'/></button>
                 </form>
             </div>
         </c:when>
@@ -140,28 +158,49 @@
             <div class="login-container">
                 <form action="controller" method="get">
                     <input name="command" type="hidden" value="logOut">
-                    <button type="submit">Log out</button>
+                    <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
-                <div class="logged_user"> You are logged as ${sessionScope.user.role}</div>
+                <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
             </div>
         </c:otherwise>
     </c:choose>
+
+    <div class="change-language">
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'en'}">
+                <a class="active" href="">ENG</a>
+            </c:when>
+            <c:otherwise>
+                <a href="controller?command=chooseLanguage&language=en">ENG</a>
+            </c:otherwise>
+        </c:choose>
+        <c:choose>
+            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'uk'}">
+                <a class="active" href="">УКР</a>
+            </c:when>
+            <c:otherwise>
+                <a href="controller?command=chooseLanguage&language=uk">УКР</a>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+
 </div>
 
 <div class="exhibitions_container">
-    <h1>Exhibitions</h1>
+    <h1><fmt:message key='index.topic'/></h1>
 
     <c:choose>
         <c:when test="${sessionScope.exhibitions == null}">
             <form action="controller" method="get">
                 <input name="command" type="hidden" value="getExhibitions">
-                <button type="submit">Get Exhibitions</button>
+                <button type="submit"><fmt:message key='index.getExhibitions'/></button>
             </form>
         </c:when>
         <c:otherwise>
             <form action="controller" method="get">
                 <input name="command" type="hidden" value="getExhibitions">
-                <button type="submit">Reload Exhibitions</button>
+                <button type="submit"><fmt:message key='index.reloadExhibitions'/></button>
             </form>
 
             <table align="center" class="exhibitions" cellspacing="9">
@@ -169,40 +208,40 @@
 
                     <c:if test="${exhibition.status == 1}">
 
-                    <tr>
-                        <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=316px
-                                 height=448px></td>
-                        <td><b>${exhibition.topic}</b></br>
-                                ${exhibition.description} </br>
+                        <tr>
+                            <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=316px
+                                     height=448px></td>
+                            <td><b>${exhibition.topic}</b></br>
+                                    ${exhibition.description} </br>
 
-                            </br>When? From ${exhibition.startDate}
-                            to ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
-                            Where?<c:forEach items="${exhibition.locations}"
-                                             var="location">   ${location.name}    ${location.address} </br>
-                            </c:forEach>
-                            Price? ${exhibition.price} UAH
-                            <c:if test="${exhibition.status == 1}">
-                                <c:if test="${user != null}">
-                                    </br></br>
-                                    <form action="controller" method="post">
-                                        <input name="command" type="hidden" value="buyTickets">
-                                        <label>How many tickets do you want to buy?</label></br>
-                                        <input type="number" name="amountOfTickets" step="1" value="1" min="1">
-                                        <input name="exhibitionId" type="hidden" value="${exhibition.id}">
-                                        <button type="submit">Buy Tickets</button>
-                                    </form>
-                                </c:if>
+                                </br><b><fmt:message key='index.exhibition.when'/>? <fmt:message key='index.exhibition.from'/></b> ${exhibition.startDate}
+                                <b><fmt:message key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
+                                <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach items="${exhibition.locations}"
+                                                 var="location">   ${location.name}    ${location.address} </br>
+                                </c:forEach>
+                                <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message key='index.exhibition.uah'/>
+                                <c:if test="${exhibition.status == 1}">
+                                    <c:if test="${user != null}">
+                                        </br></br>
+                                        <form action="controller" method="post">
+                                            <input name="command" type="hidden" value="buyTickets">
+                                            <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
+                                            <input type="number" name="amountOfTickets" step="1" value="1" min="1">
+                                            <input name="exhibitionId" type="hidden" value="${exhibition.id}">
+                                            <button type="submit"><fmt:message key='index.exhibition.buyTickets'/></button>
+                                        </form>
+                                    </c:if>
 
-                                <c:if test="${user.role == 'administrator'}">
-                                    <form action="controller" method="post">
-                                        <input name="command" type="hidden" value="cancelExhibition">
-                                        <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
-                                        <button type="submit">Cancel Exhibitions</button>
-                                    </form>
+                                    <c:if test="${user.role == 'administrator'}">
+                                        <form action="controller" method="post">
+                                            <input name="command" type="hidden" value="cancelExhibition">
+                                            <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
+                                            <button type="submit"><fmt:message key='index.exhibition.cancelExhibition'/></button>
+                                        </form>
+                                    </c:if>
                                 </c:if>
-                            </c:if>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
                     </c:if>
 
