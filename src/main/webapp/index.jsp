@@ -128,13 +128,45 @@
             caption-side: top;
 
         }
+
+        .pagination {
+            position: relative;
+            margin-bottom: 100px;
+        }
+
+        .pagination-inner{
+            position: absolute;
+            padding-left: 50%;
+        }
+
+        .pagination a {
+            background-color: #d9d9d9;
+            float: left;
+            margin-right: 5px;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .pagination a:hover {
+            background-color: #b0b0b0;
+            color: black;
+        }
+
+        .pagination a.active {
+            background-color: green;
+            color: white;
+        }
     </style>
 
 </head>
 <body>
 
 <div class="topnav">
-    <a class="active" href="index.jsp"><fmt:message key='topnav.menu.home'/></a>
+    <a class="active" href="controller?command=getExhibitions&pageNum=1"><fmt:message key='topnav.menu.home'/></a>
     <a href="jsp/registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
@@ -160,7 +192,7 @@
                     <input name="command" type="hidden" value="logOut">
                     <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
-                <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
+                <div class="logged_user"><fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
             </div>
         </c:otherwise>
     </c:choose>
@@ -194,12 +226,14 @@
         <c:when test="${sessionScope.exhibitions == null}">
             <form action="controller" method="get">
                 <input name="command" type="hidden" value="getExhibitions">
+                <input name="pageNum" type="hidden" value="1">
                 <button type="submit"><fmt:message key='index.getExhibitions'/></button>
             </form>
         </c:when>
         <c:otherwise>
             <form action="controller" method="get">
                 <input name="command" type="hidden" value="getExhibitions">
+                <input name="pageNum" type="hidden" value="1">
                 <button type="submit"><fmt:message key='index.reloadExhibitions'/></button>
             </form>
 
@@ -214,12 +248,16 @@
                             <td><b>${exhibition.topic}</b></br>
                                     ${exhibition.description} </br>
 
-                                </br><b><fmt:message key='index.exhibition.when'/>? <fmt:message key='index.exhibition.from'/></b> ${exhibition.startDate}
-                                <b><fmt:message key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
-                                <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach items="${exhibition.locations}"
-                                                 var="location">   ${location.name}    ${location.address} </br>
+                                </br><b><fmt:message key='index.exhibition.when'/>? <fmt:message
+                                        key='index.exhibition.from'/></b> ${exhibition.startDate}
+                                <b><fmt:message
+                                        key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
+                                <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach
+                                        items="${exhibition.locations}"
+                                        var="location">   ${location.name}    ${location.address} </br>
                                 </c:forEach>
-                                <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message key='index.exhibition.uah'/>
+                                <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message
+                                        key='index.exhibition.uah'/>
                                 <c:if test="${exhibition.status == 1}">
                                     <c:if test="${user != null}">
                                         </br></br>
@@ -228,7 +266,8 @@
                                             <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
                                             <input type="number" name="amountOfTickets" step="1" value="1" min="1">
                                             <input name="exhibitionId" type="hidden" value="${exhibition.id}">
-                                            <button type="submit"><fmt:message key='index.exhibition.buyTickets'/></button>
+                                            <button type="submit"><fmt:message
+                                                    key='index.exhibition.buyTickets'/></button>
                                         </form>
                                     </c:if>
 
@@ -236,7 +275,8 @@
                                         <form action="controller" method="post">
                                             <input name="command" type="hidden" value="cancelExhibition">
                                             <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
-                                            <button type="submit"><fmt:message key='index.exhibition.cancelExhibition'/></button>
+                                            <button type="submit"><fmt:message
+                                                    key='index.exhibition.cancelExhibition'/></button>
                                         </form>
                                     </c:if>
                                 </c:if>
@@ -252,6 +292,20 @@
         </c:otherwise>
     </c:choose>
 
+    <div class="pagination">
+        <div class="pagination-inner">
+            <c:forEach begin="1" end="${amountOfPages}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage == i}">
+                        <a class="active" href="controller?command=getExhibitions&pageNum=${i}">${i}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="controller?command=getExhibitions&pageNum=${i}">${i}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
+    </div>
 
 </div>
 

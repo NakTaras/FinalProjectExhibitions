@@ -146,12 +146,12 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../../index.jsp"><fmt:message key='topnav.menu.home'/></a>
-    <a href="../registration.jsp">Registration</a>
+    <a class="active" href="../../controller?command=getExhibitions&pageNum=1"><fmt:message key='topnav.menu.home'/></a>
+    <a href="../registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
-        <a href="../../controller?command=getLocations">Add Exhibition</a>
-        <a href="addLocation.jsp">Add Location</a>
+        <a href="../../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
+        <a href="addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
     </c:if>
 
     <c:choose>
@@ -159,9 +159,9 @@
             <div class="login-container">
                 <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logIn">
-                    <input type="text" placeholder="Login" name="login">
-                    <input type="password" placeholder="Password" name="password">
-                    <button type="submit">Login</button>
+                    <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
+                    <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
+                    <button type="submit"><fmt:message key='topnav.button.login'/></button>
                 </form>
             </div>
         </c:when>
@@ -169,9 +169,9 @@
             <div class="login-container">
                 <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logOut">
-                    <button type="submit">Log out</button>
+                    <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
-                <div class="logged_user"> You are logged as ${sessionScope.user.role}</div>
+                <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
             </div>
         </c:otherwise>
     </c:choose>
@@ -196,34 +196,34 @@
 
     </div>
 </div>
-<h1>Add Exhibition</h1>
+<h1><fmt:message key='addExhibition.topic'/></h1>
 <hr>
 <form action="../../controller" method="post" enctype="multipart/form-data">
     <div class="add_exhibition_container">
         <input name="command" type="hidden" value="addExhibition">
 
-        <label>Topic</label>
-        <input type="text" name="topic" placeholder="Enter Topic">
+        <label><fmt:message key='addExhibition.form.topic'/></label>
+        <input type="text" name="topic" placeholder="<fmt:message key='addExhibition.form.enterTopic'/>">
 
-        <label>Description</label>
-        <input type="text" name="description" placeholder="Enter Description">
+        <label><fmt:message key='addExhibition.form.description'/></label>
+        <input type="text" name="description" placeholder="<fmt:message key='addExhibition.form.enterDescription'/>">
 
-        <label>Start Date</label>
+        <label><fmt:message key='addExhibition.form.startDate'/></label>
         <input type="date" name="startDate">
 
-        <label>End Date</label>
+        <label><fmt:message key='addExhibition.form.endDate'/></label>
         <input type="date" name="endDate">
 
-        <label>Start Time</label>
+        <label><fmt:message key='addExhibition.form.startTime'/></label>
         <input type="time" name="startTime">
 
-        <label>End Time</label>
+        <label><fmt:message key='addExhibition.form.endTime'/></label>
         <input type="time" name="endTime">
 
-        <label>Price</label>
+        <label><fmt:message key='addExhibition.form.price'/></label>
         <input type="number" name="price" step="0.01" placeholder="0.00" min="0.01">
 
-        <label>Locations</label><br>
+        <label><fmt:message key='addExhibition.form.locations'/></label><br>
         <select name="chosenLocations" multiple="multiple">
             <c:forEach items="${locations}" var="location">
                 <option value="${location.id}">${location.name}</option>
@@ -232,10 +232,10 @@
 
         </select><br>
 
-        <label>Poster</label>
+        <label><fmt:message key='addExhibition.form.poster'/></label>
         <input type="file" name="posterImg" accept="image/*">
 
-        <button type="submit">Create Exhibition</button>
+        <button type="submit"><fmt:message key='addExhibition.form.createExhibition'/></button>
     </div>
 </form>
 </body>

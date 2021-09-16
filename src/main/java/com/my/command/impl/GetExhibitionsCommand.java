@@ -10,20 +10,20 @@ import com.my.db.entity.Exhibition;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.Date;
-import java.util.Base64;
 import java.util.List;
 
 public class GetExhibitionsCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+
+        int currentPage = Integer.parseInt(req.getParameter("pageNum"));
+
+
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
-        List<Exhibition> exhibitions = exhibitionDao.getAllExhibitions();
+        List<Exhibition> exhibitions = exhibitionDao.getExhibitionsOnPage(currentPage);
 
         LocationDao locationDao = LocationDaoImpl.getInstance();
-        for (Exhibition exhibition : exhibitions){
+        for (Exhibition exhibition : exhibitions) {
             exhibition.setLocations(locationDao.getLocationsByExhibitionId(exhibition.getId()));
             exhibition.setStartDate(String.valueOf(exhibition.getStartTimestamp()).substring(0, 10));
             exhibition.setEndDate(String.valueOf(exhibition.getEndTimestamp()).substring(0, 10));
@@ -31,8 +31,21 @@ public class GetExhibitionsCommand implements Command {
             exhibition.setEndTime(String.valueOf(exhibition.getEndTimestamp()).substring(11, 16));
         }
 
+        int amountOfPages;
+        int amountOfExhibitions;
+
+        amountOfExhibitions = exhibitionDao.getAmountOfExhibitions();
+
+        if (amountOfExhibitions % 2 == 0) {
+            amountOfPages = amountOfExhibitions / 2;
+        } else {
+            amountOfPages = (amountOfExhibitions / 2) + 1;
+        }
+
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("exhibitions", exhibitions);
+        httpSession.setAttribute("amountOfPages", amountOfPages);
+        httpSession.setAttribute("currentPage", currentPage);
 
         return "index.jsp";
     }

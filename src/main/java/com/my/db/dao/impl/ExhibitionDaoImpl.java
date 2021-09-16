@@ -146,6 +146,34 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     }
 
     @Override
+    public List<Exhibition> getExhibitionsOnPage(int pageNum) {
+        List<Exhibition> exhibitions = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE)) {
+
+            preparedStatement.setInt(1, (pageNum - 1) * 2);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibition(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return exhibitions;
+    }
+
+    @Override
     public void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws SQLException {
         PreparedStatement preparedStatement = null;
 
@@ -183,5 +211,22 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             System.out.println(e.getMessage());
             throw new SQLException(e);
         }
+    }
+
+    @Override
+    public int getAmountOfExhibitions() {
+        int amountOfExhibitions = 0;
+
+        try (Connection connection = dataSource.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS)){
+            while (rs.next()) {
+                amountOfExhibitions = rs.getInt(Constants.SQL_FIELD_AMOUNT);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return amountOfExhibitions;
     }
 }

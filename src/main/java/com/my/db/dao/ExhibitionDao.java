@@ -11,9 +11,13 @@ public interface ExhibitionDao {
 
     Exhibition getExhibitionById(long id);
 
+    List<Exhibition> getExhibitionsOnPage(int pageNum);
+
     List<Exhibition> getAllExhibitions();
 
     void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws SQLException;
 
     void cancelExhibitionById(long id) throws SQLException;
+
+    int getAmountOfExhibitions();
 }

@@ -138,12 +138,12 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../../index.jsp"><fmt:message key='topnav.menu.home'/></a>
-    <a href="../registration.jsp">Registration</a>
+    <a class="active" href="../../controller?command=getExhibitions&pageNum=1"><fmt:message key='topnav.menu.home'/></a>
+    <a href="../registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
-        <a href="../../controller?command=getLocations">Add Exhibition</a>
-        <a href="addLocation.jsp">Add Location</a>
+        <a href="../../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
+        <a href="addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
     </c:if>
 
     <c:choose>
@@ -151,9 +151,9 @@
             <div class="login-container">
                 <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logIn">
-                    <input type="text" placeholder="Login" name="login">
-                    <input type="password" placeholder="Password" name="password">
-                    <button type="submit">Login</button>
+                    <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
+                    <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
+                    <button type="submit"><fmt:message key='topnav.button.login'/></button>
                 </form>
             </div>
         </c:when>
@@ -161,9 +161,9 @@
             <div class="login-container">
                 <form action="../../controller" method="get">
                     <input name="command" type="hidden" value="logOut">
-                    <button type="submit">Log out</button>
+                    <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
-                <div class="logged_user"> You are logged as ${sessionScope.user.role}</div>
+                <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
             </div>
         </c:otherwise>
     </c:choose>
@@ -188,19 +188,19 @@
 
     </div>
 </div>
-<h1>Add Location</h1>
+<h1><fmt:message key='addLocation.topic'/></h1>
 <hr>
 <form action="../../controller" method="post">
     <div class="add_location_container">
         <input name="command" type="hidden" value="addLocation">
 
-        <label>Name</label>
-        <input type="text" name="locationName" placeholder="Enter Name">
+        <label><fmt:message key='addLocation.form.name'/></label>
+        <input type="text" name="locationName" placeholder="<fmt:message key='addLocation.form.enterName'/>">
 
-        <label>Address</label>
-        <input type="text" name="locationAddress" placeholder="Enter Address">
+        <label><fmt:message key='addLocation.form.address'/></label>
+        <input type="text" name="locationAddress" placeholder="<fmt:message key='addLocation.form.enterAddress'/>">
 
-        <button type="submit">Create Location</button>
+        <button type="submit"><fmt:message key='addLocation.form.createLocation'/></button>
     </div>
 </form>
 </body>
