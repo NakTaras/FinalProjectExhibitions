@@ -10,6 +10,7 @@ import com.my.db.entity.Exhibition;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 import java.util.List;
 
 public class GetExhibitionsCommand implements Command {
@@ -17,10 +18,27 @@ public class GetExhibitionsCommand implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
 
         int currentPage = Integer.parseInt(req.getParameter("pageNum"));
-
+        String sortType = req.getParameter("sortType");
+        List<Exhibition> exhibitions = null;
 
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
-        List<Exhibition> exhibitions = exhibitionDao.getExhibitionsOnPage(currentPage);
+
+        if (sortType.equals("default")) {
+            exhibitions = exhibitionDao.getExhibitionsOnPageByDefault(currentPage);
+        }
+
+        if (sortType.equals("topic")) {
+            exhibitions = exhibitionDao.getExhibitionsOnPageByTopic(currentPage);
+        }
+
+        if (sortType.equals("price")) {
+            exhibitions = exhibitionDao.getExhibitionsOnPageByPrice(currentPage);
+        }
+
+        if (sortType.equals("date")) {
+            Date chosenDate = Date.valueOf(req.getParameter("chosenDate"));
+            exhibitions = exhibitionDao.getExhibitionsOnPageByDate(currentPage, chosenDate);
+        }
 
         LocationDao locationDao = LocationDaoImpl.getInstance();
         for (Exhibition exhibition : exhibitions) {
@@ -32,10 +50,14 @@ public class GetExhibitionsCommand implements Command {
         }
 
         int amountOfPages;
-        int amountOfExhibitions;
+        int amountOfExhibitions = 0;
 
-        amountOfExhibitions = exhibitionDao.getAmountOfExhibitions();
-
+        if (sortType.equals("date"))
+        {
+            amountOfExhibitions = exhibitionDao.getAmountOfExhibitionsByDate(Date.valueOf(req.getParameter("chosenDate")));
+        } else {
+            amountOfExhibitions = exhibitionDao.getAmountOfExhibitions();
+        }
         if (amountOfExhibitions % 2 == 0) {
             amountOfPages = amountOfExhibitions / 2;
         } else {
@@ -46,6 +68,7 @@ public class GetExhibitionsCommand implements Command {
         httpSession.setAttribute("exhibitions", exhibitions);
         httpSession.setAttribute("amountOfPages", amountOfPages);
         httpSession.setAttribute("currentPage", currentPage);
+
 
         return "index.jsp";
     }

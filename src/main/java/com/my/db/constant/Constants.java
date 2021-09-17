@@ -24,9 +24,13 @@ public class Constants {
     public static final String SQL_ADD_ROW_TO_EXHIBITION_HAS_LOCATION = "INSERT INTO exhibition_has_location (exhibition_id, location_id) VALUES (?, ?);";
     public static final String SQL_GET_LOCATION_BY_EXHIBITION_ID = "SELECT id, name, address FROM location INNER JOIN exhibition_has_location ehl on location.id = ehl.location_id WHERE exhibition_id = ?;";
     public static final String SQL_GET_ALL_EXHIBITIONS = "SELECT * FROM exhibition;";
-    public static final String SQL_EXHIBITIONS_ON_PAGE = "SELECT * FROM exhibition limit ?, 2;";
+    public static final String SQL_EXHIBITIONS_ON_PAGE_BY_DEFAULT = "SELECT * FROM exhibition WHERE status = 1 LIMIT ?, 2;";
+    public static final String SQL_EXHIBITIONS_ON_PAGE_BY_TOPIC = "SELECT * FROM exhibition WHERE status = 1 ORDER BY topic LIMIT ?, 2;";
+    public static final String SQL_EXHIBITIONS_ON_PAGE_BY_PRICE = "SELECT * FROM exhibition WHERE status = 1 ORDER BY price LIMIT ?, 2;";
+    public static final String SQL_EXHIBITIONS_ON_PAGE_BY_DATE = "SELECT * FROM exhibition WHERE status = 1 AND ? BETWEEN start_date_time AND end_date_time LIMIT ?, 2;";
     public static final String SQL_CANCEL_EXHIBITION_BY_ID = "UPDATE exhibition SET status = 0 WHERE id = ?;";
     public static final String SQL_BUY_TICKETS = "INSERT INTO user_has_exhibition (user_id, exhibition_id, amount_of_bought_tickets) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE amount_of_bought_tickets = user_has_exhibition.amount_of_bought_tickets + ?;";
-    public static final String SQL_GET_AMOUNT_OF_EXHIBITIONS = "SELECT COUNT(*) as 'amount' FROM exhibition;";
+    public static final String SQL_GET_AMOUNT_OF_EXHIBITIONS = "SELECT COUNT(*) as 'amount' FROM exhibition WHERE status = 1;";
+    public static final String SQL_GET_AMOUNT_OF_EXHIBITIONS_BY_DATE = "SELECT COUNT(*) as 'amount' FROM exhibition WHERE status = 1 AND ? BETWEEN start_date_time AND end_date_time;";
 
 }

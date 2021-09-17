@@ -3,7 +3,9 @@ package com.my.db.dao;
 import com.my.db.entity.Exhibition;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface ExhibitionDao {
@@ -11,7 +13,13 @@ public interface ExhibitionDao {
 
     Exhibition getExhibitionById(long id);
 
-    List<Exhibition> getExhibitionsOnPage(int pageNum);
+    List<Exhibition> getExhibitionsOnPageByDefault(int pageNum);
+
+    List<Exhibition> getExhibitionsOnPageByPrice(int pageNum);
+
+    List<Exhibition> getExhibitionsOnPageByTopic(int pageNum);
+
+    List<Exhibition> getExhibitionsOnPageByDate(int pageNum, Date chosenDate);
 
     List<Exhibition> getAllExhibitions();
 
@@ -20,4 +28,6 @@ public interface ExhibitionDao {
     void cancelExhibitionById(long id) throws SQLException;
 
     int getAmountOfExhibitions();
+
+    int getAmountOfExhibitionsByDate(Date chosenDate);
 }

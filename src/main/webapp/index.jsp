@@ -134,7 +134,7 @@
             margin-bottom: 100px;
         }
 
-        .pagination-inner{
+        .pagination-inner {
             position: absolute;
             padding-left: 50%;
         }
@@ -222,85 +222,98 @@
 <div class="exhibitions_container">
     <h1><fmt:message key='index.topic'/></h1>
 
-    <c:choose>
-        <c:when test="${sessionScope.exhibitions == null}">
-            <form action="controller" method="get">
-                <input name="command" type="hidden" value="getExhibitions">
-                <input name="pageNum" type="hidden" value="1">
-                <button type="submit"><fmt:message key='index.getExhibitions'/></button>
-            </form>
-        </c:when>
-        <c:otherwise>
-            <form action="controller" method="get">
-                <input name="command" type="hidden" value="getExhibitions">
-                <input name="pageNum" type="hidden" value="1">
-                <button type="submit"><fmt:message key='index.reloadExhibitions'/></button>
-            </form>
 
-            <table align="center" class="exhibitions" cellspacing="9">
-                <c:forEach items="${exhibitions}" var="exhibition">
+    <form action="controller" method="get">
+        <input name="command" type="hidden" value="getExhibitions">
+        <input name="pageNum" type="hidden" value="1">
+        <input name="sortType" type="hidden" value="default">
+        <button type="submit"><fmt:message key='index.exhibition.byDefault'/></button>
+    </form>
 
-                    <c:if test="${exhibition.status == 1}">
+    <form action="controller" method="get">
+        <input name="command" type="hidden" value="getExhibitions">
+        <input name="pageNum" type="hidden" value="1">
+        <input name="sortType" type="hidden" value="topic">
+        <button type="submit"><fmt:message key='index.exhibition.byTopic'/></button>
+    </form>
 
-                        <tr>
-                            <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=300px
-                                     height=400px></td>
-                            <td><b>${exhibition.topic}</b></br>
-                                    ${exhibition.description} </br>
+    <form action="controller" method="get">
+        <input name="command" type="hidden" value="getExhibitions">
+        <input name="pageNum" type="hidden" value="1">
+        <input name="sortType" type="hidden" value="price">
+        <button type="submit"><fmt:message key='index.exhibition.byPrice'/></button>
+    </form>
 
-                                </br><b><fmt:message key='index.exhibition.when'/>? <fmt:message
-                                        key='index.exhibition.from'/></b> ${exhibition.startDate}
-                                <b><fmt:message
-                                        key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
-                                <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach
-                                        items="${exhibition.locations}"
-                                        var="location">   ${location.name}    ${location.address} </br>
-                                </c:forEach>
-                                <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message
-                                        key='index.exhibition.uah'/>
-                                <c:if test="${exhibition.status == 1}">
-                                    <c:if test="${user != null}">
-                                        </br></br>
-                                        <form action="controller" method="post">
-                                            <input name="command" type="hidden" value="buyTickets">
-                                            <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
-                                            <input type="number" name="amountOfTickets" step="1" value="1" min="1">
-                                            <input name="exhibitionId" type="hidden" value="${exhibition.id}">
-                                            <button type="submit"><fmt:message
-                                                    key='index.exhibition.buyTickets'/></button>
-                                        </form>
-                                    </c:if>
+    <form action="controller" method="get">
+        <input name="command" type="hidden" value="getExhibitions">
+        <input name="pageNum" type="hidden" value="1">
+        <input name="sortType" type="hidden" value="date">
+        <label><fmt:message key='index.exhibition.chooseDate'/></label>
+        <input type="date" name="chosenDate" <c:if test="${param.chosenDate != null}"> value="${param.chosenDate}" </c:if>>
+        <button type="submit"><fmt:message key='index.exhibition.byDate'/></button>
+    </form>
 
-                                    <c:if test="${user.role == 'administrator'}">
-                                        <form action="controller" method="post">
-                                            <input name="command" type="hidden" value="cancelExhibition">
-                                            <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
-                                            <button type="submit"><fmt:message
-                                                    key='index.exhibition.cancelExhibition'/></button>
-                                        </form>
-                                    </c:if>
-                                </c:if>
-                            </td>
-                        </tr>
+    <c:if test="${exhibitions != null}">
 
-                    </c:if>
+        <table align="center" class="exhibitions" cellspacing="9">
+            <c:forEach items="${exhibitions}" var="exhibition">
 
-                </c:forEach>
+                <tr>
+                    <td><img src="controller?command=getImg&img=${exhibition.id}" alt="no img" width=300px
+                             height=400px></td>
+                    <td><b>${exhibition.topic}</b></br>
+                            ${exhibition.description} </br>
+
+                        </br><b><fmt:message key='index.exhibition.when'/>? <fmt:message
+                                key='index.exhibition.from'/></b> ${exhibition.startDate}
+                        <b><fmt:message
+                                key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
+                        <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach
+                                items="${exhibition.locations}"
+                                var="location">   ${location.name}    ${location.address} </br>
+                        </c:forEach>
+                        <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message
+                                key='index.exhibition.uah'/>
+                        <c:if test="${exhibition.status == 1}">
+                            <c:if test="${user != null}">
+                                </br></br>
+                                <form action="controller" method="post">
+                                    <input name="command" type="hidden" value="buyTickets">
+                                    <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
+                                    <input type="number" name="amountOfTickets" step="1" value="1" min="1">
+                                    <input name="exhibitionId" type="hidden" value="${exhibition.id}">
+                                    <button type="submit"><fmt:message
+                                            key='index.exhibition.buyTickets'/></button>
+                                </form>
+                            </c:if>
+
+                            <c:if test="${user.role == 'administrator'}">
+                                <form action="controller" method="post">
+                                    <input name="command" type="hidden" value="cancelExhibition">
+                                    <input name="canceledExhibitionId" type="hidden" value="${exhibition.id}">
+                                    <button type="submit"><fmt:message
+                                            key='index.exhibition.cancelExhibition'/></button>
+                                </form>
+                            </c:if>
+                        </c:if>
+                    </td>
+                </tr>
+
+            </c:forEach>
 
 
-            </table>
-        </c:otherwise>
-    </c:choose>
+        </table>
+    </c:if>
 
     <div class="pagination">
         <div class="pagination-inner">
             <c:forEach begin="1" end="${amountOfPages}" var="i">
                 <c:choose>
                     <c:when test="${currentPage == i}">
-                        <a class="active" href="controller?command=getExhibitions&pageNum=${i}">${i}</a>
+                        <a class="active" href="controller?command=getExhibitions&pageNum=${i}&sortType=${param.sortType}<c:if test="${param.sortType eq 'date'}">&chosenDate=${param.chosenDate}</c:if>">${i}</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="controller?command=getExhibitions&pageNum=${i}">${i}</a>
+                        <a href="controller?command=getExhibitions&pageNum=${i}&sortType=${param.sortType}<c:if test="${param.sortType eq 'date'}">&chosenDate=${param.chosenDate}</c:if>">${i}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

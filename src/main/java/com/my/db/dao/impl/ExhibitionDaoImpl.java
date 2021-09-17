@@ -146,14 +146,101 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     }
 
     @Override
-    public List<Exhibition> getExhibitionsOnPage(int pageNum) {
+    public List<Exhibition> getExhibitionsOnPageByDefault(int pageNum) {
         List<Exhibition> exhibitions = new ArrayList<>();
         ResultSet resultSet = null;
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DEFAULT)) {
 
             preparedStatement.setInt(1, (pageNum - 1) * 2);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibition(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return exhibitions;
+    }
+
+    @Override
+    public List<Exhibition> getExhibitionsOnPageByPrice(int pageNum) {
+        List<Exhibition> exhibitions = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_PRICE)) {
+
+            preparedStatement.setInt(1, (pageNum - 1) * 2);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibition(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return exhibitions;
+    }
+
+    @Override
+    public List<Exhibition> getExhibitionsOnPageByTopic(int pageNum) {
+        List<Exhibition> exhibitions = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_TOPIC)) {
+
+            preparedStatement.setInt(1, (pageNum - 1) * 2);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibition(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return exhibitions;
+    }
+
+    @Override
+    public List<Exhibition> getExhibitionsOnPageByDate(int pageNum, Date chosenDate) {
+        List<Exhibition> exhibitions = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DATE)) {
+
+            int i = 1;
+            preparedStatement.setDate(i++, chosenDate);
+            preparedStatement.setInt(i, (pageNum - 1) * 2);
+
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 exhibitions.add(mapExhibition(resultSet));
@@ -225,6 +312,36 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+
+        return amountOfExhibitions;
+    }
+
+    @Override
+    public int getAmountOfExhibitionsByDate(Date chosenDate) {
+        int amountOfExhibitions = 0;
+        ResultSet resultSet = null;
+
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS_BY_DATE)){
+
+            preparedStatement.setDate(1, chosenDate);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                amountOfExhibitions = resultSet.getInt(Constants.SQL_FIELD_AMOUNT);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
         }
 
         return amountOfExhibitions;
