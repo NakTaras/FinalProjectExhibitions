@@ -23,6 +23,8 @@ public class CommandContainer {
         commands.put("cancelExhibition", new CancelExhibitionCommand());
         commands.put("buyTickets", new BuyTicketsCommand());
         commands.put("chooseLanguage", new ChooseLanguageCommand());
+        commands.put("getExhibitionsStatistics", new GetExhibitionsStatisticsCommand());
+        commands.put("getDetailedStatistics", new GetDetailedStatisticsCommand());
     }
 
     public static Command getCommand(String commandName) {

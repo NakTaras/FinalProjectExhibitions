@@ -137,34 +137,35 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../controller?command=getExhibitions&pageNum=1"><fmt:message key='topnav.menu.home'/></a>
+    <a class="active" href="../controller?command=getExhibitions&pageNum=1&sortType=default"><fmt:message key='topnav.menu.home'/></a>
     <a href="registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
-    <a href="../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
-    <a href="admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
+        <a href="../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
+        <a href="admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
+        <a href="../controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
     </c:if>
 
     <c:choose>
-    <c:when test="${sessionScope.user == null}">
-    <div class="login-container">
-        <form action="../controller" method="get">
-            <input name="command" type="hidden" value="logIn">
-            <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
-            <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
-            <button type="submit"><fmt:message key='topnav.button.login'/></button>
-        </form>
-    </div>
-    </c:when>
-    <c:otherwise>
-    <div class="login-container">
-        <form action="../controller" method="get">
-            <input name="command" type="hidden" value="logOut">
-            <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
-        </form>
-        <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
-    </div>
-    </c:otherwise>
+        <c:when test="${sessionScope.user == null}">
+            <div class="login-container">
+                <form action="../controller" method="get">
+                    <input name="command" type="hidden" value="logIn">
+                    <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
+                    <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
+                    <button type="submit"><fmt:message key='topnav.button.login'/></button>
+                </form>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="login-container">
+                <form action="../controller" method="get">
+                    <input name="command" type="hidden" value="logOut">
+                    <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
+                </form>
+                <div class="logged_user"><fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
+            </div>
+        </c:otherwise>
     </c:choose>
 
     <div class="change-language">
@@ -187,16 +188,16 @@
 
     </div>
 </div>
-    <h1><fmt:message key='registration.topic'/></h1>
-    <hr>
-    <form action="../controller" method="post">
-        <div class="registration_container">
-            <input name="command" type="hidden" value="registration">
-            <input name="role" type="hidden" value="client">
-            <input type="text" name="login" placeholder="<fmt:message key='registration.form.enterUsername'/>">
-            <input type="password" name="password" placeholder="<fmt:message key='registration.form.enterPassword'/>">
-            <button type="submit"><fmt:message key='registration.form.logUp'/></button>
-        </div>
-    </form>
+<h1><fmt:message key='registration.topic'/></h1>
+<hr>
+<form action="../controller" method="post">
+    <div class="registration_container">
+        <input name="command" type="hidden" value="registration">
+        <input name="role" type="hidden" value="client">
+        <input type="text" name="login" placeholder="<fmt:message key='registration.form.enterUsername'/>">
+        <input type="password" name="password" placeholder="<fmt:message key='registration.form.enterPassword'/>">
+        <button type="submit"><fmt:message key='registration.form.logUp'/></button>
+    </div>
+</form>
 </body>
 </html>

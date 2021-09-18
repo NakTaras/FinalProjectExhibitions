@@ -16,7 +16,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Add Location</title>
+    <title>Detailed Statistics</title>
 
     <style>
         body {
@@ -102,35 +102,32 @@
             background-color: green;
         }
 
-        .add_location_container {
-            padding: 50px 30%;
+        .detailed-statistic {
+            margin-left: 30%;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 40%;
         }
 
-        .add_location_container form {
-            border: 3px solid #f1f1f1;
+        .detailed-statistic td, .statistic th {
+            border: 1px solid #ddd;
+            padding: 8px;
         }
 
-        .add_location_container input[type=text] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
+        .detailed-statistic tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
 
-        .add_location_container button {
+        .detailed-statistic tr:hover {
+            background-color: #ddd;
+        }
+
+        .detailed-statistic th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
             background-color: #04AA6D;
             color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .add_location_container button:hover {
-            opacity: 0.8;
         }
 
     </style>
@@ -164,7 +161,7 @@
                     <input name="command" type="hidden" value="logOut">
                     <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
-                <div class="logged_user"> <fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
+                <div class="logged_user"><fmt:message key='topnav.info.loggedAs'/> ${sessionScope.user.login}</div>
             </div>
         </c:otherwise>
     </c:choose>
@@ -189,20 +186,21 @@
 
     </div>
 </div>
-<h1><fmt:message key='addLocation.topic'/></h1>
+<h1>Statistics About "${param.exhibitionTopic}"</h1>
 <hr>
-<form action="../../controller" method="post">
-    <div class="add_location_container">
-        <input name="command" type="hidden" value="addLocation">
 
-        <label><fmt:message key='addLocation.form.name'/></label>
-        <input type="text" name="locationName" placeholder="<fmt:message key='addLocation.form.enterName'/>">
+<table class="detailed-statistic">
+    <tr>
+        <th>User Login</th>
+        <th>Number Of Bought Tickets</th>
+    </tr>
+    <c:forEach items="${detailedStatistics}" var="statistics">
+        <tr>
+            <td>${statistics.key}</td>
+            <td>${statistics.value}</td>
+        </tr>
+    </c:forEach>
+</table>
 
-        <label><fmt:message key='addLocation.form.address'/></label>
-        <input type="text" name="locationAddress" placeholder="<fmt:message key='addLocation.form.enterAddress'/>">
-
-        <button type="submit"><fmt:message key='addLocation.form.createLocation'/></button>
-    </div>
-</form>
 </body>
 </html>

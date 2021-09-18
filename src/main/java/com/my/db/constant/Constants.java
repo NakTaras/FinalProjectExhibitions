@@ -13,6 +13,8 @@ public class Constants {
     public static final String SQL_FIELD_POSTER_IMG = "poster_img";
     public static final String SQL_FIELD_STATUS = "status";
     public static final String SQL_FIELD_AMOUNT = "amount";
+    public static final String SQL_FIELD_TICKETS_AMOUNT = "tickets_amount";
+    public static final String SQL_FIELD_AMOUNT_OF_BOUGHT_TICKETS = "amount_of_bought_tickets";
 
 
     public static final String SQL_ADD_USER = "INSERT INTO user (login, password, role_id) VALUES (?, ?, (SELECT id FROM role WHERE name = ?));";
@@ -32,5 +34,8 @@ public class Constants {
     public static final String SQL_BUY_TICKETS = "INSERT INTO user_has_exhibition (user_id, exhibition_id, amount_of_bought_tickets) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE amount_of_bought_tickets = user_has_exhibition.amount_of_bought_tickets + ?;";
     public static final String SQL_GET_AMOUNT_OF_EXHIBITIONS = "SELECT COUNT(*) as 'amount' FROM exhibition WHERE status = 1;";
     public static final String SQL_GET_AMOUNT_OF_EXHIBITIONS_BY_DATE = "SELECT COUNT(*) as 'amount' FROM exhibition WHERE status = 1 AND ? BETWEEN start_date_time AND end_date_time;";
+    public static final String SQL_GET_AMOUNT_OF_SOLD_TICKETS_BY_EXHIBITION_ID = "SELECT SUM(amount_of_bought_tickets) as 'tickets_amount' FROM user_has_exhibition WHERE exhibition_id = ? GROUP BY exhibition_id;";
+    public static final String SQL_GET_EXHIBITIONS_STATISTICS = "SELECT id, topic, start_date_time, end_date_time, price FROM exhibition WHERE status = 1;";
+    public static final String SQL_GET_DETAILED_STATISTICS_BY_EXHIBITION_ID = "SELECT user.login, amount_of_bought_tickets FROM user_has_exhibition INNER JOIN user ON user.id = user_has_exhibition.user_id WHERE user_has_exhibition.exhibition_id = ?;";
 
 }

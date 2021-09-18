@@ -29,6 +29,10 @@ public class BuyTicketsCommand implements Command {
             return "error.jsp";
         }
 
+        httpSession.setAttribute("exhibitions", null);
+        httpSession.setAttribute("amountOfPages", null);
+        httpSession.setAttribute("currentPage", null);
+
         return "index.jsp";
     }
 }

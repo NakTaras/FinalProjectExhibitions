@@ -8,7 +8,9 @@ import com.my.util.DataSourceUtil;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExhibitionDaoImpl implements ExhibitionDao {
 
@@ -345,5 +347,93 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         }
 
         return amountOfExhibitions;
+    }
+
+    @Override
+    public Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId) {
+        int amountOfSoldTickets = 0;
+        ResultSet resultSet = null;
+
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_SOLD_TICKETS_BY_EXHIBITION_ID)){
+
+            preparedStatement.setLong(1, exhibitionId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                amountOfSoldTickets = resultSet.getInt(Constants.SQL_FIELD_TICKETS_AMOUNT);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return amountOfSoldTickets;
+    }
+
+    @Override
+    public List<Exhibition> getExhibitionsStatistics() {
+        List<Exhibition> exhibitions = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_EXHIBITIONS_STATISTICS)){
+            while (rs.next()) {
+                exhibitions.add(mapExhibitionStatistic(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return exhibitions;
+    }
+
+    @Override
+    public Map<String, Integer> getDetailedStatisticsByExhibitionId(long exhibitionId) {
+        Map<String, Integer> detailedStatistic = new LinkedHashMap<>();
+        ResultSet resultSet = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_DETAILED_STATISTICS_BY_EXHIBITION_ID)){
+
+            preparedStatement.setLong(1, exhibitionId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                detailedStatistic.put(resultSet.getString(Constants.SQL_FIELD_LOGIN), resultSet.getInt(Constants.SQL_FIELD_AMOUNT_OF_BOUGHT_TICKETS));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+
+        return detailedStatistic;
+
+    }
+
+    private Exhibition mapExhibitionStatistic(ResultSet rs) throws SQLException {
+        Exhibition exhibition = new Exhibition();
+        exhibition.setId(rs.getLong(Constants.SQL_FIELD_ID));
+        exhibition.setTopic(rs.getString(Constants.SQL_FIELD_TOPIC));
+        exhibition.setStartTimestamp(rs.getTimestamp(Constants.SQL_FIELD_START_DATE_TIME));
+        exhibition.setEndTimestamp(rs.getTimestamp(Constants.SQL_FIELD_END_DATE_TIME));
+        exhibition.setPrice(rs.getDouble(Constants.SQL_FIELD_PRICE));
+
+        return exhibition;
     }
 }

@@ -32,11 +32,11 @@ public class Controller extends HttpServlet {
         // (3) do command
         address = command.execute(request, response);
 
-        if (!commandName.equals("getImg") && !commandName.equals("getExhibitions")) {
+        if (!commandName.equals("getImg") && !commandName.equals("getExhibitions") && !commandName.equals("getDetailedStatistics") ) {
             response.sendRedirect(address);
         }
 
-        if (commandName.equals("getExhibitions")) {
+        if (commandName.equals("getExhibitions") || commandName.equals("getDetailedStatistics") ) {
             request.getRequestDispatcher(address).forward(request, response);
         }
 

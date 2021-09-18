@@ -166,12 +166,13 @@
 <body>
 
 <div class="topnav">
-    <a class="active" href="controller?command=getExhibitions&pageNum=1"><fmt:message key='topnav.menu.home'/></a>
+    <a class="active" href="controller?command=getExhibitions&pageNum=1&sortType=default"><fmt:message key='topnav.menu.home'/></a>
     <a href="jsp/registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
         <a href="controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
         <a href="jsp/admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
+        <a href="controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
     </c:if>
 
 

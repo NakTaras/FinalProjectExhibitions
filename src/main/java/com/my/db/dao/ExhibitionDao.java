@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public interface ExhibitionDao {
     boolean saveExhibition(Exhibition exhibition, String[] locationsId);
@@ -30,4 +31,10 @@ public interface ExhibitionDao {
     int getAmountOfExhibitions();
 
     int getAmountOfExhibitionsByDate(Date chosenDate);
+
+    Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId);
+
+    List<Exhibition> getExhibitionsStatistics();
+
+    Map<String, Integer> getDetailedStatisticsByExhibitionId(long exhibitionId);
 }
