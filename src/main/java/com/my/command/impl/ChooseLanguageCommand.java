@@ -13,7 +13,7 @@ public class ChooseLanguageCommand implements Command {
         String language = req.getParameter("language");
 
         HttpSession httpSession = req.getSession();
-        // place in request scope
+
         httpSession.setAttribute("language", language);
 
         return "index.jsp";

@@ -1,11 +1,12 @@
 package com.my.db.entity;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class Location implements Serializable {
     private long id;
     private String name;
-    private String address;
+    private Map<String, String> address;
 
     public long getId() {
         return id;
@@ -16,7 +17,7 @@ public class Location implements Serializable {
         return "Location{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+                ", address=" + address +
                 '}';
     }
 
@@ -32,11 +33,11 @@ public class Location implements Serializable {
         this.name = name;
     }
 
-    public String getAddress() {
+    public Map<String, String> getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Map<String, String> address) {
         this.address = address;
     }
 }

@@ -198,8 +198,11 @@
         <label><fmt:message key='addLocation.form.name'/></label>
         <input type="text" name="locationName" placeholder="<fmt:message key='addLocation.form.enterName'/>">
 
-        <label><fmt:message key='addLocation.form.address'/></label>
-        <input type="text" name="locationAddress" placeholder="<fmt:message key='addLocation.form.enterAddress'/>">
+        <label><fmt:message key='addLocation.form.address'/> in en</label>
+        <input type="text" name="locationAddressEn" placeholder="<fmt:message key='addLocation.form.enterAddress'/> in en">
+
+        <label><fmt:message key='addLocation.form.address'/> in uk</label>
+        <input type="text" name="locationAddressUk" placeholder="<fmt:message key='addLocation.form.enterAddress'/> in uk">
 
         <button type="submit"><fmt:message key='addLocation.form.createLocation'/></button>
     </div>
