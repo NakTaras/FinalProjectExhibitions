@@ -135,19 +135,19 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" href="../../controller?command=getExhibitions&pageNum=1&sortType=default"><fmt:message key='topnav.menu.home'/></a>
-    <a href="../registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
+    <a class="active" href="controller?command=getExhibitions&pageNum=1&sortType=default"><fmt:message key='topnav.menu.home'/></a>
+    <a href="jsp/registration.jsp"><fmt:message key='topnav.menu.registration'/></a>
 
     <c:if test="${user.role == 'administrator'}">
-        <a href="../../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
-        <a href="addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
-        <a href="../../controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
+        <a href="controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
+        <a href="jsp/admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
+        <a href="controller?command=getExhibitionsStatistics"><fmt:message key='topnav.menu.exhibitionStatistics'/></a>
     </c:if>
 
     <c:choose>
         <c:when test="${sessionScope.user == null}">
             <div class="login-container">
-                <form action="../../controller" method="get">
+                <form action="controller" method="get">
                     <input name="command" type="hidden" value="logIn">
                     <input type="text" placeholder="<fmt:message key='topnav.input.login'/>" name="login">
                     <input type="password" placeholder="<fmt:message key='topnav.input.password'/>" name="password">
@@ -157,7 +157,7 @@
         </c:when>
         <c:otherwise>
             <div class="login-container">
-                <form action="../../controller" method="get">
+                <form action="controller" method="get">
                     <input name="command" type="hidden" value="logOut">
                     <button type="submit"><fmt:message key='topnav.button.logOut'/></button>
                 </form>
@@ -172,7 +172,7 @@
                 <a class="active" href="">ENG</a>
             </c:when>
             <c:otherwise>
-                <a href="../../controller?command=chooseLanguage&language=en">ENG</a>
+                <a href="controller?command=chooseLanguage&language=en">ENG</a>
             </c:otherwise>
         </c:choose>
         <c:choose>
@@ -180,19 +180,19 @@
                 <a class="active" href="">УКР</a>
             </c:when>
             <c:otherwise>
-                <a href="../../controller?command=chooseLanguage&language=uk">УКР</a>
+                <a href="controller?command=chooseLanguage&language=uk">УКР</a>
             </c:otherwise>
         </c:choose>
 
     </div>
 </div>
-<h1>Statistics About "${param.exhibitionTopic}"</h1>
+<h1><fmt:message key='detailedStatistics.topic'/> "${param.exhibitionTopic}"</h1>
 <hr>
 
 <table class="detailed-statistic">
     <tr>
-        <th>User Login</th>
-        <th>Number Of Bought Tickets</th>
+        <th><fmt:message key='detailedStatistics.table.userLogin'/></th>
+        <th><fmt:message key='detailedStatistics.table.numberOfBoughtTickets'/></th>
     </tr>
     <c:forEach items="${detailedStatistics}" var="statistics">
         <tr>

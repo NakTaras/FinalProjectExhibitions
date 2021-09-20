@@ -172,7 +172,7 @@
     <c:if test="${user.role == 'administrator'}">
         <a href="controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
         <a href="jsp/admin/addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
-        <a href="controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
+        <a href="controller?command=getExhibitionsStatistics"><fmt:message key='topnav.menu.exhibitionStatistics'/></a>
     </c:if>
 
 
@@ -256,6 +256,8 @@
 
     <c:if test="${exhibitions != null}">
 
+        <c:set var="language" scope="page" value="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session']}" />
+
         <table align="center" class="exhibitions" cellspacing="9">
             <c:forEach items="${exhibitions}" var="exhibition">
 
@@ -269,9 +271,23 @@
                                 key='index.exhibition.from'/></b> ${exhibition.startDate}
                         <b><fmt:message
                                 key='index.exhibition.to'/></b> ${exhibition.endDate} ${exhibition.startTime}-${exhibition.endTime} </br>
-                        <b><fmt:message key='index.exhibition.where'/>?</b><c:forEach
-                                items="${exhibition.locations}"
-                                var="location">   ${location.name}    ${location.address} </br>
+                        <b><fmt:message key='index.exhibition.where'/>?</b>
+                        <c:forEach items="${exhibition.locations}" var="location">
+                            ${location.name}
+
+                            <c:choose>
+                                <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'en'}">
+                                    ${location.address['en']}
+                                </c:when>
+                                <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'uk'}">
+                                    ${location.address['uk']}
+                                </c:when>
+                                <c:otherwise>
+                                    ${location.address['uk']}
+                                </c:otherwise>
+                            </c:choose>
+
+                            </br>
                         </c:forEach>
                         <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message
                                 key='index.exhibition.uah'/>

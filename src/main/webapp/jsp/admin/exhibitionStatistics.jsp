@@ -148,7 +148,7 @@
     <c:if test="${user.role == 'administrator'}">
         <a href="../../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
         <a href="addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
-        <a href="../../controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
+        <a href="../../controller?command=getExhibitionsStatistics"><fmt:message key='topnav.menu.exhibitionStatistics'/></a>
     </c:if>
 
     <c:choose>
@@ -193,16 +193,16 @@
 
     </div>
 </div>
-<h1>Exhibition Statistics</h1>
+<h1><fmt:message key='exhibitionStatistics.topic'/></h1>
 <hr>
 
 <table class="statistic">
     <tr>
-        <th>Topic</th>
-        <th>Dates Of Work</th>
-        <th>Locations</th>
-        <th>Ticket Price</th>
-        <th>Number Of Tickets Sold</th>
+        <th><fmt:message key='exhibitionStatistics.table.topic'/></th>
+        <th><fmt:message key='exhibitionStatistics.table.datesOfWork'/></th>
+        <th><fmt:message key='exhibitionStatistics.table.locations'/></th>
+        <th><fmt:message key='exhibitionStatistics.table.ticketPrice'/></th>
+        <th><fmt:message key='exhibitionStatistics.table.numberOfTicketsSold'/></th>
     </tr>
     <c:forEach items="${exhibitionsStatistics}" var="exhibitionStatistics">
         <tr>
@@ -215,7 +215,7 @@
             </td>
             <td>${exhibitionStatistics.key.price}</td>
             <td>${exhibitionStatistics.value}</td>
-            <td><a href="../../controller?command=getDetailedStatistics&exhibitionId=${exhibitionStatistics.key.id}&exhibitionTopic=${exhibitionStatistics.key.topic}" class="active">Get Detailed Statistics</a></td>
+            <td><a href="../../controller?command=getDetailedStatistics&exhibitionId=${exhibitionStatistics.key.id}&exhibitionTopic=${exhibitionStatistics.key.topic}" class="active"><fmt:message key='exhibitionStatistics.table.button.getDetailedStatistics'/></a></td>
         </tr>
     </c:forEach>
 </table>

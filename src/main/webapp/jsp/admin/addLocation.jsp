@@ -144,7 +144,7 @@
     <c:if test="${user.role == 'administrator'}">
         <a href="../../controller?command=getLocations"><fmt:message key='topnav.menu.addExhibition'/></a>
         <a href="addLocation.jsp"><fmt:message key='topnav.menu.addLocation'/></a>
-        <a href="../../controller?command=getExhibitionsStatistics">Exhibition Statistics</a>
+        <a href="../../controller?command=getExhibitionsStatistics"><fmt:message key='topnav.menu.exhibitionStatistics'/></a>
     </c:if>
 
     <c:choose>
