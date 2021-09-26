@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>(404) The page doesn't exist.</title>
+    <title>Something go wrong</title>
     <link rel="stylesheet" type="text/css" href="//cloud.typography.com/746852/739588/css/fonts.css" />
     <style type="text/css">
         body {
@@ -26,7 +26,7 @@
 
         .error-container h1 {
             margin: 0;
-            font-size: 130px;
+            font-size: 70px;
             font-weight: 300;
         }
 
@@ -56,8 +56,8 @@
 <body>
 
 <div class="error-container">
-    <h1>404</h1>
-    <p class="return">Take me back to <a href="../controller?command=getExhibitions&pageNum=1&sortType=default">Home page</a></p>
+    <h1>Something go wrong</h1>
+    <p class="return">Take me back to <a href="http://localhost:8080/FinalProjectExhibitions_war_exploded/controller?command=getExhibitions&pageNum=1&sortType=default">Home page</a></p>
 </div>
 
 </body>
