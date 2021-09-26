@@ -6,6 +6,7 @@ import com.my.db.dao.LocationDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,20 +25,40 @@ public class GetExhibitionsCommand implements Command {
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
 
         if (sortType.equals("default")) {
-            exhibitions = exhibitionDao.getExhibitionsOnPageByDefault(currentPage);
+            try {
+                exhibitions = exhibitionDao.getExhibitionsOnPageByDefault(currentPage);
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         }
 
         if (sortType.equals("topic")) {
-            exhibitions = exhibitionDao.getExhibitionsOnPageByTopic(currentPage);
+            try {
+                exhibitions = exhibitionDao.getExhibitionsOnPageByTopic(currentPage);
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         }
 
         if (sortType.equals("price")) {
-            exhibitions = exhibitionDao.getExhibitionsOnPageByPrice(currentPage);
+            try {
+                exhibitions = exhibitionDao.getExhibitionsOnPageByPrice(currentPage);
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         }
 
         if (sortType.equals("date")) {
             Date chosenDate = Date.valueOf(req.getParameter("chosenDate"));
-            exhibitions = exhibitionDao.getExhibitionsOnPageByDate(currentPage, chosenDate);
+            try {
+                exhibitions = exhibitionDao.getExhibitionsOnPageByDate(currentPage, chosenDate);
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         }
 
         LocationDao locationDao = LocationDaoImpl.getInstance();
@@ -54,9 +75,19 @@ public class GetExhibitionsCommand implements Command {
 
         if (sortType.equals("date"))
         {
-            amountOfExhibitions = exhibitionDao.getAmountOfExhibitionsByDate(Date.valueOf(req.getParameter("chosenDate")));
+            try {
+                amountOfExhibitions = exhibitionDao.getAmountOfExhibitionsByDate(Date.valueOf(req.getParameter("chosenDate")));
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         } else {
-            amountOfExhibitions = exhibitionDao.getAmountOfExhibitions();
+            try {
+                amountOfExhibitions = exhibitionDao.getAmountOfExhibitions();
+            } catch (DaoException e) {
+                e.printStackTrace();
+                return "jsp/error.jsp";
+            }
         }
         if (amountOfExhibitions % 2 == 0) {
             amountOfPages = amountOfExhibitions / 2;

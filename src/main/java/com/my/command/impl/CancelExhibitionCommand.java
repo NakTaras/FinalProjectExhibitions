@@ -4,6 +4,7 @@ import com.my.command.Command;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,13 +23,13 @@ public class CancelExhibitionCommand implements Command {
 
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
 
-        for (Exhibition exhibition : exhibitions){
-            if (exhibition.getId() == canceledExhibitionId){
+        for (Exhibition exhibition : exhibitions) {
+            if (exhibition.getId() == canceledExhibitionId) {
                 try {
                     exhibitionDao.cancelExhibitionById(canceledExhibitionId);
-                } catch (SQLException e) {
+                } catch (DaoException e) {
                     System.out.println(e.getMessage());
-                    return "error.jsp";
+                    return "jsp/error.jsp";
                 }
 
                 exhibition = exhibitionDao.getExhibitionById(canceledExhibitionId);

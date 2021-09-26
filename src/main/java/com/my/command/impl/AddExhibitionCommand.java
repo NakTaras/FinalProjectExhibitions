@@ -4,6 +4,7 @@ import com.my.command.Command;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class AddExhibitionCommand implements Command {
             exhibition.setPosterImg(imgByteArray);
         } catch (IOException | ServletException e) {
             System.out.println(e.getMessage());
-            return "error.jsp";
+            return "jsp/error.jsp";
         }
 
         System.out.println(exhibition);
@@ -44,14 +45,15 @@ public class AddExhibitionCommand implements Command {
         System.out.println(Arrays.toString(locationsId));
 
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
-        boolean isAdded = exhibitionDao.saveExhibition(exhibition, locationsId);
 
-        Exhibition exhibition1 = exhibitionDao.getExhibitionById(exhibition.getId());
-
-        if (isAdded){
-            return "controller?command=getLocations";
+        try {
+            exhibitionDao.saveExhibition(exhibition, locationsId);
+        } catch (DaoException e) {
+            System.out.println(e.getMessage());
+            return "jsp/error.jsp";
         }
 
-        return "error.jsp";
+        return "controller?command=getLocations";
+
     }
 }

@@ -3,7 +3,7 @@ package com.my.command.impl;
 import com.my.command.Command;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
-import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,12 @@ public class GetDetailedStatisticsCommand implements Command {
         long exhibitionId = Long.parseLong(req.getParameter("exhibitionId"));
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
 
-        detailedStatistics = exhibitionDao.getDetailedStatisticsByExhibitionId(exhibitionId);
+        try {
+            detailedStatistics = exhibitionDao.getDetailedStatisticsByExhibitionId(exhibitionId);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            return "jsp/error.jsp";
+        }
 
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("detailedStatistics", detailedStatistics);

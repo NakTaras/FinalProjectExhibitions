@@ -6,6 +6,7 @@ import com.my.db.dao.LocationDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,12 @@ public class GetExhibitionsStatisticsCommand implements Command {
 
         ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
 
-        exhibitions = exhibitionDao.getExhibitionsStatistics();
+        try {
+            exhibitions = exhibitionDao.getExhibitionsStatistics();
+        } catch (DaoException e) {
+            e.printStackTrace();
+            return "jsp/error.jsp";
+        }
 
         LocationDao locationDao = LocationDaoImpl.getInstance();
         for (Exhibition exhibition : exhibitions) {

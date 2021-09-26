@@ -1,40 +1,40 @@
 package com.my.db.dao;
 
 import com.my.db.entity.Exhibition;
+import com.my.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.Map;
 
 public interface ExhibitionDao {
-    boolean saveExhibition(Exhibition exhibition, String[] locationsId);
+    void saveExhibition(Exhibition exhibition, String[] locationsId) throws DaoException;
 
     Exhibition getExhibitionById(long id);
 
-    List<Exhibition> getExhibitionsOnPageByDefault(int pageNum);
+    List<Exhibition> getExhibitionsOnPageByDefault(int pageNum) throws DaoException;
 
-    List<Exhibition> getExhibitionsOnPageByPrice(int pageNum);
+    List<Exhibition> getExhibitionsOnPageByPrice(int pageNum) throws DaoException;
 
-    List<Exhibition> getExhibitionsOnPageByTopic(int pageNum);
+    List<Exhibition> getExhibitionsOnPageByTopic(int pageNum) throws DaoException;
 
-    List<Exhibition> getExhibitionsOnPageByDate(int pageNum, Date chosenDate);
+    List<Exhibition> getExhibitionsOnPageByDate(int pageNum, Date chosenDate) throws DaoException;
 
-    List<Exhibition> getAllExhibitions();
+    void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws DaoException;
 
-    void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws SQLException;
+    void cancelExhibitionById(long id) throws DaoException;
 
-    void cancelExhibitionById(long id) throws SQLException;
+    int getAmountOfExhibitions() throws DaoException;
 
-    int getAmountOfExhibitions();
-
-    int getAmountOfExhibitionsByDate(Date chosenDate);
+    int getAmountOfExhibitionsByDate(Date chosenDate) throws DaoException;
 
     Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId);
 
-    List<Exhibition> getExhibitionsStatistics();
+    List<Exhibition> getExhibitionsStatistics() throws DaoException;
 
-    Map<String, Integer> getDetailedStatisticsByExhibitionId(long exhibitionId);
+    Map<String, Integer> getDetailedStatisticsByExhibitionId(long exhibitionId) throws DaoException;
+
+    List<Exhibition> getAllExhibitions() throws DaoException;
 }
