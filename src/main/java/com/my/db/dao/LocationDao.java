@@ -1,13 +1,13 @@
 package com.my.db.dao;
 
 import com.my.db.entity.Location;
+import com.my.exception.DaoException;
 
 import java.util.List;
 
 public interface LocationDao {
-    boolean saveLocation(Location location);
 
-    Location getLocationById(long id);
+    void saveLocation(Location location) throws DaoException;
     List<Location> getLocationsByExhibitionId(long exhibitionId);
-    List<Location> getAllLocations();
+    List<Location> getAllLocations() throws DaoException;
 }

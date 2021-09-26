@@ -12,6 +12,15 @@ public class User implements Serializable {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
     public void setId(long id) {
         this.id = id;
     }

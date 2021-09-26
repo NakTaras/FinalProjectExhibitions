@@ -4,6 +4,7 @@ import com.my.command.Command;
 import com.my.db.dao.UserDao;
 import com.my.db.dao.impl.UserDaoImpl;
 import com.my.db.entity.User;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,7 @@ public class BuyTicketsCommand implements Command {
 
         try {
             userDao.buyTickets(userId, exhibitionId, amountOfTickets);
-        } catch (SQLException e) {
+        } catch (DaoException e) {
             System.out.println(e.getMessage());
             return "error.jsp";
         }

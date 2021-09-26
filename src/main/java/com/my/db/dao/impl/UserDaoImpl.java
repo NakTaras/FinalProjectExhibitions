@@ -3,14 +3,20 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.UserDao;
 import com.my.db.entity.User;
+import com.my.exception.DaoException;
+import com.my.servlet.Controller;
 import com.my.util.DataSourceUtil;
 import com.my.util.PasswordEncryption;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
+
+    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
     private static UserDaoImpl instance;
     private DataSource dataSource;
@@ -27,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean saveUser(User user) {
+    public void saveUser(User user) throws DaoException {
         ResultSet resultSet = null;
 
         try (Connection connection = dataSource.getConnection();
@@ -44,18 +50,17 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
+            logger.error("Cannot save this user", ex);
+            throw new DaoException("Cannot save this user", ex);
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
         }
-        return true;
     }
 
     @Override
@@ -75,22 +80,17 @@ public class UserDaoImpl implements UserDao {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
         }
         return user;
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return null;
     }
 
     private User mapUser(ResultSet rs) throws SQLException {
@@ -102,7 +102,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws SQLException {
+    public void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws DaoException {
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_BUY_TICKETS)) {
@@ -114,8 +114,8 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new SQLException(e);
+            logger.error("Cannot buy tickets!", e);
+            throw new DaoException("Cannot buy tickets!", e);
         }
 
     }

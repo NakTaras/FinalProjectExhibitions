@@ -1,16 +1,12 @@
 package com.my.db.dao;
 
 import com.my.db.entity.User;
-
-import java.sql.SQLException;
-import java.util.List;
+import com.my.exception.DaoException;
 
 public interface UserDao {
-    boolean saveUser(User user);
+    void saveUser(User user) throws DaoException;
 
     User getUserByLogin(String login, String password);
 
-    List<User> getAllUsers();
-
-    void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws SQLException;
+    void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws DaoException;
 }

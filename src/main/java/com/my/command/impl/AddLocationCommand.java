@@ -4,6 +4,7 @@ import com.my.command.Command;
 import com.my.db.dao.LocationDao;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Location;
+import com.my.exception.DaoException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ public class AddLocationCommand implements Command {
         Map<String, String> address = new LinkedHashMap<>();
 
         if (req.getParameter("locationAddressUk").equals("") || req.getParameter("locationAddressEn").equals("")){
-            return "error.jsp";
+            return "jsp/error.jsp";
         }
 
         address.put("uk", req.getParameter("locationAddressUk"));
@@ -27,10 +28,11 @@ public class AddLocationCommand implements Command {
         location.setAddress(address);
 
         LocationDao locationDao = LocationDaoImpl.getInstance();
-        boolean isAdded = locationDao.saveLocation(location);
-
-        if (!isAdded){
-            return "error.jsp";
+        try {
+            locationDao.saveLocation(location);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            return "jsp/error.jsp";
         }
 
         return "jsp/admin/addLocation.jsp";

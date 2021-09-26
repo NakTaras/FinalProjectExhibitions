@@ -3,7 +3,10 @@ package com.my.db.dao.impl;
 import com.my.db.constant.Constants;
 import com.my.db.dao.LocationDao;
 import com.my.db.entity.Location;
+import com.my.exception.DaoException;
 import com.my.util.DataSourceUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -13,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LocationDaoImpl implements LocationDao {
+
+    private static final Logger logger = LogManager.getLogger(LocationDaoImpl.class);
 
     private static LocationDaoImpl instance;
     private DataSource dataSource;
@@ -29,7 +34,7 @@ public class LocationDaoImpl implements LocationDao {
     }
 
     @Override
-    public boolean saveLocation(Location location) {
+    public void saveLocation(Location location) throws DaoException{
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -56,25 +61,27 @@ public class LocationDaoImpl implements LocationDao {
             }
 
             connection.commit();
-
-        } catch (SQLException e) {
+            connection.setAutoCommit(true);
+        } catch (SQLException | DaoException e) {
 
             try {
                 if (connection != null) {
                     connection.rollback();
+                    connection.setAutoCommit(true);
                 }
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                logger.error(ex);
             }
-            System.out.println("Transaction rollback\t" + e.getMessage());
+            logger.error("Cannot save location!", e);
 
-            return false;
+            throw new DaoException("Cannot save location!", e);
+
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
 
@@ -82,7 +89,7 @@ public class LocationDaoImpl implements LocationDao {
                 try {
                     preparedStatement.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
 
@@ -90,16 +97,15 @@ public class LocationDaoImpl implements LocationDao {
                 try {
                     connection.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
 
         }
-        return true;
     }
 
 
-    private void addLocationAddress(Connection connection, long locationId, String language, String address) throws SQLException {
+    private void addLocationAddress(Connection connection, long locationId, String language, String address) throws DaoException {
         PreparedStatement preparedStatement = null;
 
         try {
@@ -113,8 +119,8 @@ public class LocationDaoImpl implements LocationDao {
 
         } catch (SQLException ex) {
 
-            System.out.println(ex.getMessage());
-            throw new SQLException();
+            logger.error("Cannot add location address!", ex);
+            throw new DaoException("Cannot add location address!", ex);
 
         } finally {
 
@@ -122,20 +128,16 @@ public class LocationDaoImpl implements LocationDao {
                 try {
                     preparedStatement.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
 
         }
     }
 
-    @Override
-    public Location getLocationById(long id) {
-        return null;
-    }
 
     @Override
-    public List<Location> getAllLocations() {
+    public List<Location> getAllLocations() throws DaoException{
         List<Location> locations = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection();
@@ -145,7 +147,8 @@ public class LocationDaoImpl implements LocationDao {
                 locations.add(mapLocation(rs));
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error("Cannot get locations!", e);
+            throw new DaoException("Cannot get locations!", e);
         }
 
         return locations;
@@ -170,13 +173,13 @@ public class LocationDaoImpl implements LocationDao {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
         }
@@ -198,13 +201,13 @@ public class LocationDaoImpl implements LocationDao {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.error(e);
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    logger.error(ex);
                 }
             }
         }
