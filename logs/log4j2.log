@@ -281,3 +281,229 @@ java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Накреслені д
 2021-09-27 00:34:33,889 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
 2021-09-27 00:34:33,904 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getImg
 2021-09-27 00:34:33,908 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-09-27 00:38:19,539 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-09-27 00:43:59,220 INFO c.m.s.Controller [http-nio-8080-exec-10] HelloServlet.init
+2021-09-27 00:43:59,232 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> logIn
+2021-09-27 00:43:59,799 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-09-27 00:44:01,199 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 00:44:01,256 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> index.jsp
+2021-09-27 00:44:01,284 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:01,284 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:02,329 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 00:44:02,345 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-09-27 00:44:02,377 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:02,377 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:03,158 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 00:44:03,174 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   address ==> index.jsp
+2021-09-27 00:44:03,194 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:03,194 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:06,689 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getLocations
+2021-09-27 00:44:06,689 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> jsp/admin/addExhibition.jsp
+2021-09-27 00:44:06,693 INFO c.m.f.AccessFilter [http-nio-8080-exec-2] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-09-27 00:44:34,320 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doPost  commandName ==> addExhibition
+2021-09-27 00:44:34,352 ERROR c.m.d.d.i.LocationDaoImpl [http-nio-8080-exec-5] Cannot save exhibition!
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Накреслені дні' for key 'exhibition.exhibition_topic_uindex'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1092) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1350) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at org.apache.tomcat.dbcp.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:135) ~[tomcat-dbcp.jar:9.0.52]
+	at org.apache.tomcat.dbcp.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:135) ~[tomcat-dbcp.jar:9.0.52]
+	at com.my.db.dao.impl.ExhibitionDaoImpl.saveExhibition(ExhibitionDaoImpl.java:55) [classes/:?]
+	at com.my.command.impl.AddExhibitionCommand.execute(AddExhibitionCommand.java:50) [classes/:?]
+	at com.my.servlet.Controller.doPost(Controller.java:76) [classes/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [servlet-api.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [servlet-api.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-websocket.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at com.my.filter.EncodingFilter.doFilter(EncodingFilter.java:14) [classes/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [catalina.jar:9.0.52]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) [catalina.jar:9.0.52]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [catalina.jar:9.0.52]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [catalina.jar:9.0.52]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [catalina.jar:9.0.52]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-coyote.jar:9.0.52]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-coyote.jar:9.0.52]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util.jar:9.0.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util.jar:9.0.52]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util.jar:9.0.52]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_291]
+2021-09-27 00:44:34,364 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doPost   address ==> jsp/error.jsp
+2021-09-27 00:44:36,793 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 00:44:36,829 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   address ==> index.jsp
+2021-09-27 00:44:36,845 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:36,845 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-09-27 00:44:50,476 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost  commandName ==> registration
+2021-09-27 00:44:50,516 ERROR c.m.d.d.i.UserDaoImpl [http-nio-8080-exec-9] Cannot save this user
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'user' for key 'user.login_UNIQUE'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1092) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1350) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at org.apache.tomcat.dbcp.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:135) ~[tomcat-dbcp.jar:9.0.52]
+	at org.apache.tomcat.dbcp.dbcp2.DelegatingPreparedStatement.executeUpdate(DelegatingPreparedStatement.java:135) ~[tomcat-dbcp.jar:9.0.52]
+	at com.my.db.dao.impl.UserDaoImpl.saveUser(UserDaoImpl.java:46) [classes/:?]
+	at com.my.command.impl.RegistrationCommand.execute(RegistrationCommand.java:23) [classes/:?]
+	at com.my.servlet.Controller.doPost(Controller.java:76) [classes/:?]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681) [servlet-api.jar:4.0.FR]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) [servlet-api.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-websocket.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at com.my.filter.EncodingFilter.doFilter(EncodingFilter.java:14) [classes/:?]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [catalina.jar:9.0.52]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) [catalina.jar:9.0.52]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [catalina.jar:9.0.52]
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687) [catalina.jar:9.0.52]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [catalina.jar:9.0.52]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [catalina.jar:9.0.52]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) [tomcat-coyote.jar:9.0.52]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-coyote.jar:9.0.52]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1726) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-coyote.jar:9.0.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) [tomcat-util.jar:9.0.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) [tomcat-util.jar:9.0.52]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-util.jar:9.0.52]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_291]
+2021-09-27 00:44:50,516 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost   address ==> jsp/registration.jsp
+2021-09-27 00:45:51,024 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-09-27 17:59:31,814 INFO c.m.s.Controller [http-nio-8080-exec-1] HelloServlet.init
+2021-09-27 17:59:31,833 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doPost  commandName ==> registration
+2021-09-27 17:59:32,502 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doPost   address ==> index.jsp
+2021-09-27 17:59:36,605 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> logIn
+2021-09-27 17:59:36,620 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:39,296 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 17:59:39,372 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:39,397 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:39,398 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:43,281 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost  commandName ==> buyTickets
+2021-09-27 17:59:43,305 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost   address ==> index.jsp
+2021-09-27 17:59:44,549 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 17:59:44,566 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:44,593 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:44,594 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:47,498 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doPost  commandName ==> buyTickets
+2021-09-27 17:59:47,512 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doPost   address ==> index.jsp
+2021-09-27 17:59:49,717 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 17:59:49,734 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:49,759 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:49,761 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:52,517 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost  commandName ==> buyTickets
+2021-09-27 17:59:52,522 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doPost   address ==> index.jsp
+2021-09-27 17:59:53,751 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 17:59:53,767 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:53,783 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:53,783 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:57,076 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doPost  commandName ==> buyTickets
+2021-09-27 17:59:57,091 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doPost   address ==> index.jsp
+2021-09-27 17:59:58,924 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 17:59:58,949 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   address ==> index.jsp
+2021-09-27 17:59:58,974 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-09-27 17:59:58,974 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:00,253 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 18:00:00,264 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:00,280 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:03,707 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doPost  commandName ==> buyTickets
+2021-09-27 18:00:03,721 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doPost   address ==> index.jsp
+2021-09-27 18:00:13,927 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> logOut
+2021-09-27 18:00:13,927 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:18,171 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> logIn
+2021-09-27 18:00:18,173 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:19,485 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getExhibitionsStatistics
+2021-09-27 18:00:19,506 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> jsp/admin/exhibitionStatistics.jsp
+2021-09-27 18:00:19,509 INFO c.m.f.AccessFilter [http-nio-8080-exec-9] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-09-27 18:00:21,559 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:00:21,562 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 18:00:24,531 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:00:24,533 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 18:00:27,654 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:00:27,656 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 18:00:30,641 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:00:30,643 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 18:00:33,609 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:00:33,611 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 18:00:36,463 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> logOut
+2021-09-27 18:00:36,463 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:45,015 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> logIn
+2021-09-27 18:00:45,018 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:46,073 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 18:00:46,089 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:46,105 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:46,107 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:48,891 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doPost  commandName ==> buyTickets
+2021-09-27 18:00:48,905 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doPost   address ==> index.jsp
+2021-09-27 18:00:51,137 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 18:00:51,157 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-09-27 18:00:51,180 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:51,180 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-09-27 18:00:55,223 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doPost  commandName ==> buyTickets
+2021-09-27 18:00:55,226 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doPost   address ==> index.jsp
+2021-09-27 18:00:56,843 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> logOut
+2021-09-27 18:00:56,843 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-09-27 18:01:00,344 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> logIn
+2021-09-27 18:01:00,346 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-09-27 18:01:01,669 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getExhibitionsStatistics
+2021-09-27 18:01:01,688 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   address ==> jsp/admin/exhibitionStatistics.jsp
+2021-09-27 18:01:01,690 INFO c.m.f.AccessFilter [http-nio-8080-exec-5] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-09-27 18:01:03,565 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 18:01:03,567 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 20:13:02,186 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-09-27 20:24:44,668 INFO c.m.s.Controller [http-nio-8080-exec-7] HelloServlet.init
+2021-09-27 20:24:44,724 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> logIn
+2021-09-27 20:24:45,966 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> index.jsp
+2021-09-27 20:24:48,454 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 20:24:48,550 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-09-27 20:24:48,602 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-09-27 20:24:48,602 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-09-27 20:24:53,353 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doPost  commandName ==> buyTickets
+2021-09-27 20:24:53,400 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doPost   address ==> index.jsp
+2021-09-27 20:24:55,699 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> logOut
+2021-09-27 20:24:55,699 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   address ==> index.jsp
+2021-09-27 20:25:00,295 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> logIn
+2021-09-27 20:25:00,338 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   address ==> index.jsp
+2021-09-27 20:25:01,553 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getExhibitions
+2021-09-27 20:25:01,581 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   address ==> index.jsp
+2021-09-27 20:25:01,613 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getImg
+2021-09-27 20:25:01,613 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-09-27 20:25:05,499 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doPost  commandName ==> buyTickets
+2021-09-27 20:25:05,507 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doPost   address ==> index.jsp
+2021-09-27 20:25:07,581 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> logOut
+2021-09-27 20:25:07,581 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-09-27 20:25:12,055 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> logIn
+2021-09-27 20:25:12,059 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-09-27 20:25:13,710 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getExhibitionsStatistics
+2021-09-27 20:25:13,770 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> jsp/admin/exhibitionStatistics.jsp
+2021-09-27 20:25:13,774 INFO c.m.f.AccessFilter [http-nio-8080-exec-8] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-09-27 20:25:16,120 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 20:25:16,125 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 20:25:20,452 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 20:25:20,456 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 20:25:23,014 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getDetailedStatistics
+2021-09-27 20:25:23,019 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-09-27 20:25:27,654 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> logOut
+2021-09-27 20:25:27,654 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-09-27 21:24:48,346 INFO c.m.s.Controller [main] HelloServlet.destroy

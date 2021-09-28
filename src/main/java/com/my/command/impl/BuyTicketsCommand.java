@@ -5,6 +5,7 @@ import com.my.db.dao.UserDao;
 import com.my.db.dao.impl.UserDaoImpl;
 import com.my.db.entity.User;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class BuyTicketsCommand implements Command {
         User user = (User) httpSession.getAttribute("user");
         long userId = user.getId();
 
-        UserDao userDao = UserDaoImpl.getInstance();
+        UserDao userDao = UserDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         try {
             userDao.buyTickets(userId, exhibitionId, amountOfTickets);

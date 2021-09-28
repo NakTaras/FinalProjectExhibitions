@@ -21,13 +21,13 @@ public class UserDaoImpl implements UserDao {
     private static UserDaoImpl instance;
     private DataSource dataSource;
 
-    private UserDaoImpl() {
-        dataSource = DataSourceUtil.getDataSource();
+    private UserDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public static synchronized UserDaoImpl getInstance() {
+    public static synchronized UserDaoImpl getInstance(DataSource dataSource) {
             if (instance == null) {
-                instance = new UserDaoImpl();
+                instance = new UserDaoImpl(dataSource);
             }
         return instance;
     }
@@ -75,9 +75,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(i, PasswordEncryption.encrypt(password));
             resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                user = mapUser(resultSet);
-            }
+           resultSet.next();
+           user = mapUser(resultSet);
+
 
         } catch (SQLException e) {
             logger.error(e);
