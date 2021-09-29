@@ -14,17 +14,39 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
+/**
+ * Class UserDaoImpl is used to access information about users from the database.
+ * Class UserDaoImpl implements interface UserDao.
+ * @author Taras Nakonechnyi
+ */
 public class UserDaoImpl implements UserDao {
 
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
+    /**
+     *  Singleton object of class UserDaoImpl
+     */
     private static UserDaoImpl instance;
+
+    /**
+     * A factory for connections to the database
+     */
     private DataSource dataSource;
 
+    /**
+     * The private constructor that called from the method getInstance.
+     * It should be called exactly once when the first time the method getInstance is called.
+     * @param dataSource - factory for connections to the database
+     */
     private UserDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Static method that create instance and call private constructor when the first time the method is called.
+     * @param dataSource - factory for connections to the database.
+     * @return instance - Singleton object of class UserDaoImpl
+     */
     public static synchronized UserDaoImpl getInstance(DataSource dataSource) {
             if (instance == null) {
                 instance = new UserDaoImpl(dataSource);
@@ -93,6 +115,11 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    /**
+     * The method set information about the user into the object of class User.
+     * @param rs - ResultSet with information about the user from the database.
+     * @return object of class User with information about the user
+     */
     private User mapUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong(Constants.SQL_FIELD_ID));

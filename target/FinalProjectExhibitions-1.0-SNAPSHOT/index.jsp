@@ -129,6 +129,14 @@
 
         }
 
+        #email1 {
+            display: none;
+        }
+
+        #email2 {
+            display: none;
+        }
+
         .pagination {
             position: relative;
             margin-bottom: 100px;
@@ -258,6 +266,8 @@
 
         <c:set var="language" scope="page" value="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session']}" />
 
+        <c:set value="1" var="i"/>
+
         <table align="center" class="exhibitions" cellspacing="9">
             <c:forEach items="${exhibitions}" var="exhibition">
 
@@ -297,10 +307,16 @@
                                 <form action="controller" method="post">
                                     <input name="command" type="hidden" value="buyTickets">
                                     <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
-                                    <input type="number" name="amountOfTickets" step="1" value="1" min="1">
+                                    <input type="number" name="amountOfTickets" step="1" value="1" min="1"></br>
+                                    <label><b>Do you want to get confirmation on email?</b></label>
+                                    <input type="checkbox" id="hasEmail${i}" onclick="showEmailInput(${i})"></br>
+                                    <div id="email${i}">
+                                        <label><b>Input your email</b></label></br>
+                                        <input type="text" placeholder="Email" name="email">
+                                        <input name="exhibitionTopic" type="hidden" value="${exhibition.topic}">
+                                    </div>
                                     <input name="exhibitionId" type="hidden" value="${exhibition.id}">
-                                    <button type="submit"><fmt:message
-                                            key='index.exhibition.buyTickets'/></button>
+                                    <button type="submit"><fmt:message key='index.exhibition.buyTickets'/></button>
                                 </form>
                             </c:if>
 
@@ -315,6 +331,8 @@
                         </c:if>
                     </td>
                 </tr>
+
+                <c:set value="${i+1}" var="i"/>
 
             </c:forEach>
 
@@ -338,6 +356,21 @@
     </div>
 
 </div>
+
+
+<script>
+
+    function showEmailInput(i) {
+        var checkBox = document.getElementById("hasEmail" + i);
+        var text = document.getElementById("email" + i);
+        if (checkBox.checked == true){
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
+    }
+</script>
+
 
 </body>
 </html>

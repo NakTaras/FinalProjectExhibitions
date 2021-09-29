@@ -6,11 +6,11 @@ import com.my.db.dao.impl.UserDaoImpl;
 import com.my.db.entity.User;
 import com.my.exception.DaoException;
 import com.my.util.DataSourceUtil;
+import com.my.util.EmailSender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class BuyTicketsCommand implements Command {
     @Override
@@ -29,6 +29,14 @@ public class BuyTicketsCommand implements Command {
         } catch (DaoException e) {
             System.out.println(e.getMessage());
             return "error.jsp";
+        }
+
+        String recipientEmail = req.getParameter("email");
+
+        if (!recipientEmail.equals("")) {
+            String exhibitionTopic = req.getParameter("exhibitionTopic");
+
+            EmailSender.sendEmail(recipientEmail, exhibitionTopic, amountOfTickets);
         }
 
         httpSession.setAttribute("exhibitions", null);
