@@ -4,6 +4,7 @@ import com.my.db.constant.Constants;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
+import com.my.util.AutoCloseableClose;
 import com.my.util.DataSourceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,15 +36,17 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
 
     @Override
     public void saveExhibition(Exhibition exhibition, String[] locationsId) throws DaoException {
-        ResultSet resultSet = null;
         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         long exhibitionId;
+
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
-            PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_ADD_EXHIBITION, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement(Constants.SQL_ADD_EXHIBITION, Statement.RETURN_GENERATED_KEYS);
             int i = 1;
             preparedStatement.setString(i++, exhibition.getTopic());
             preparedStatement.setString(i++, exhibition.getDescription());
@@ -61,9 +64,12 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
 
             exhibitionId = exhibition.getId();
 
-            for (String locationId : locationsId){
+            for (String locationId : locationsId) {
                 setRowToExhibitionHasLocation(connection, exhibitionId, Long.parseLong(locationId));
             }
+
+            connection.commit();
+            connection.setAutoCommit(true);
 
         } catch (SQLException e) {
             logger.error("Cannot save exhibition!", e);
@@ -77,29 +83,22 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             }
             throw new DaoException("Cannot save exhibition!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
-        }
-        try {
-            connection.commit();
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            logger.error(e);
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
     }
 
     @Override
     public Exhibition getExhibitionById(long id) {
         Exhibition exhibition = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_EXHIBITION_BY_ID)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_EXHIBITION_BY_ID);
 
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -111,13 +110,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         } catch (SQLException e) {
             logger.error("Cannot get exhibition by id!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
         return exhibition;
     }
@@ -139,16 +134,25 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getAllExhibitions() throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_ALL_EXHIBITIONS)){
-            while (rs.next()) {
-                exhibitions.add(mapExhibition(rs));
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(Constants.SQL_GET_ALL_EXHIBITIONS);
+
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibition(resultSet));
             }
         } catch (SQLException e) {
             logger.error("Cannot get all exhibitions!", e);
             throw new DaoException("Cannot get all exhibitions!", e);
+        } finally {
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(statement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -157,10 +161,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getExhibitionsOnPageByDefault(int pageNum) throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DEFAULT)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DEFAULT);
 
             preparedStatement.setInt(1, (pageNum - 1) * 2);
             resultSet = preparedStatement.executeQuery();
@@ -171,13 +178,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get exhibitions on page by default!", e);
             throw new DaoException("Cannot get exhibitions on page by default!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -186,10 +189,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getExhibitionsOnPageByPrice(int pageNum) throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_PRICE)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_PRICE);
 
             preparedStatement.setInt(1, (pageNum - 1) * 2);
             resultSet = preparedStatement.executeQuery();
@@ -200,13 +206,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get exhibitions on page by price!", e);
             throw new DaoException("Cannot get exhibitions on page by price!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -215,10 +217,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getExhibitionsOnPageByTopic(int pageNum) throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_TOPIC)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_TOPIC);
 
             preparedStatement.setInt(1, (pageNum - 1) * 2);
             resultSet = preparedStatement.executeQuery();
@@ -229,13 +234,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get exhibitions on page by topic!", e);
             throw new DaoException("Cannot get exhibitions on page by topic!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -244,10 +245,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getExhibitionsOnPageByDate(int pageNum, Date chosenDate) throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DATE)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_EXHIBITIONS_ON_PAGE_BY_DATE);
 
             int i = 1;
             preparedStatement.setDate(i++, chosenDate);
@@ -261,13 +265,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get exhibitions on page by date!", e);
             throw new DaoException("Cannot get exhibitions on page by date!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -289,20 +289,18 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot set row exhibitions has location!", e);
             throw new DaoException("Cannot set row exhibitions has location!", e);
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(preparedStatement);
         }
     }
 
     @Override
     public void cancelExhibitionById(long id) throws DaoException {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_CANCEL_EXHIBITION_BY_ID)){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_CANCEL_EXHIBITION_BY_ID);
 
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
@@ -310,22 +308,34 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         } catch (SQLException e) {
             logger.error("Cannot cancel exhibition!", e);
             throw new DaoException("Cannot cancel exhibition!", e);
+        } finally {
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
     }
 
     @Override
     public int getAmountOfExhibitions() throws DaoException {
         int amountOfExhibitions = 0;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS)){
-            while (rs.next()) {
-                amountOfExhibitions = rs.getInt(Constants.SQL_FIELD_AMOUNT);
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS);
+
+            while (resultSet.next()) {
+                amountOfExhibitions = resultSet.getInt(Constants.SQL_FIELD_AMOUNT);
             }
         } catch (SQLException e) {
             logger.error("Cannot get amount of exhibitions!", e);
             throw new DaoException("Cannot get amount of exhibitions!", e);
+        } finally {
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(statement);
+            AutoCloseableClose.close(connection);
         }
 
         return amountOfExhibitions;
@@ -334,11 +344,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public int getAmountOfExhibitionsByDate(Date chosenDate) throws DaoException {
         int amountOfExhibitions = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS_BY_DATE)){
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_EXHIBITIONS_BY_DATE);
 
             preparedStatement.setDate(1, chosenDate);
             resultSet = preparedStatement.executeQuery();
@@ -350,13 +362,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get amount of exhibitions by date!", e);
             throw new DaoException("Cannot get amount of exhibitions by date!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return amountOfExhibitions;
@@ -365,11 +373,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId) {
         int amountOfSoldTickets = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_SOLD_TICKETS_BY_EXHIBITION_ID)){
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_AMOUNT_OF_SOLD_TICKETS_BY_EXHIBITION_ID);
 
             preparedStatement.setLong(1, exhibitionId);
             resultSet = preparedStatement.executeQuery();
@@ -380,13 +390,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         } catch (SQLException e) {
             logger.error("Cannot get amount of sold tickets!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return amountOfSoldTickets;
@@ -395,16 +401,25 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public List<Exhibition> getExhibitionsStatistics() throws DaoException {
         List<Exhibition> exhibitions = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_EXHIBITIONS_STATISTICS)){
-            while (rs.next()) {
-                exhibitions.add(mapExhibitionStatistic(rs));
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(Constants.SQL_GET_EXHIBITIONS_STATISTICS);
+
+            while (resultSet.next()) {
+                exhibitions.add(mapExhibitionStatistic(resultSet));
             }
         } catch (SQLException e) {
             logger.error("Cannot get exhibitions statistics!", e);
             throw new DaoException("Cannot get exhibitions statistics!", e);
+        } finally {
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(statement);
+            AutoCloseableClose.close(connection);
         }
 
         return exhibitions;
@@ -413,10 +428,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     @Override
     public Map<String, Integer> getDetailedStatisticsByExhibitionId(long exhibitionId) throws DaoException {
         Map<String, Integer> detailedStatistic = new LinkedHashMap<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_DETAILED_STATISTICS_BY_EXHIBITION_ID)){
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_DETAILED_STATISTICS_BY_EXHIBITION_ID);
 
             preparedStatement.setLong(1, exhibitionId);
             resultSet = preparedStatement.executeQuery();
@@ -428,13 +446,9 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
             logger.error("Cannot get detailed statistics!", e);
             throw new DaoException("Cannot get detailed statistics!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
         return detailedStatistic;

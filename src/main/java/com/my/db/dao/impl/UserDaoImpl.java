@@ -5,6 +5,7 @@ import com.my.db.dao.UserDao;
 import com.my.db.entity.User;
 import com.my.exception.DaoException;
 import com.my.servlet.Controller;
+import com.my.util.AutoCloseableClose;
 import com.my.util.DataSourceUtil;
 import com.my.util.PasswordEncryption;
 import org.apache.logging.log4j.LogManager;
@@ -56,10 +57,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_ADD_USER, Statement.RETURN_GENERATED_KEYS);
+
             int i = 1;
             preparedStatement.setString(i++, user.getLogin());
             preparedStatement.setString(i++, PasswordEncryption.encrypt(user.getPassword()));
@@ -75,23 +80,23 @@ public class UserDaoImpl implements UserDao {
             logger.error("Cannot save this user", ex);
             throw new DaoException("Cannot save this user", ex);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
     }
 
     @Override
     public User getUserByLogin(String login, String password) {
         User user = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_USER_BY_LOGIN)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_USER_BY_LOGIN);
+
             int i = 1;
             preparedStatement.setString(i++, login);
             preparedStatement.setString(i, PasswordEncryption.encrypt(password));
@@ -104,13 +109,9 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             logger.error(e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
         return user;
     }
@@ -130,9 +131,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void buyTickets(long userId, long exhibitionId, int amountOfTickets) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_BUY_TICKETS)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_BUY_TICKETS);
+
             int i = 1;
             preparedStatement.setLong(i++, userId);
             preparedStatement.setLong(i++, exhibitionId);
@@ -143,6 +148,9 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             logger.error("Cannot buy tickets!", e);
             throw new DaoException("Cannot buy tickets!", e);
+        } finally {
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
 
     }

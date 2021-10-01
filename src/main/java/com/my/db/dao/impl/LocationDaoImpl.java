@@ -4,6 +4,7 @@ import com.my.db.constant.Constants;
 import com.my.db.dao.LocationDao;
 import com.my.db.entity.Location;
 import com.my.exception.DaoException;
+import com.my.util.AutoCloseableClose;
 import com.my.util.DataSourceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +35,7 @@ public class LocationDaoImpl implements LocationDao {
     }
 
     @Override
-    public void saveLocation(Location location) throws DaoException{
+    public void saveLocation(Location location) throws DaoException {
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -56,7 +57,7 @@ public class LocationDaoImpl implements LocationDao {
                 }
             }
 
-            for (Map.Entry<String, String> addressLanguage : location.getAddress().entrySet()){
+            for (Map.Entry<String, String> addressLanguage : location.getAddress().entrySet()) {
                 addLocationAddress(connection, location.getId(), addressLanguage.getKey(), addressLanguage.getValue());
             }
 
@@ -77,30 +78,9 @@ public class LocationDaoImpl implements LocationDao {
             throw new DaoException("Cannot save location!", e);
 
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
-
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
-
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
-
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
     }
 
@@ -123,43 +103,47 @@ public class LocationDaoImpl implements LocationDao {
             throw new DaoException("Cannot add location address!", ex);
 
         } finally {
-
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
-
+            AutoCloseableClose.close(preparedStatement);
         }
     }
 
 
     @Override
-    public List<Location> getAllLocations() throws DaoException{
+    public List<Location> getAllLocations() throws DaoException {
         List<Location> locations = new ArrayList<>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(Constants.SQL_GET_ALL_LOCATION)){
-            while (rs.next()) {
-                locations.add(mapLocation(rs));
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(Constants.SQL_GET_ALL_LOCATION);
+
+            while (resultSet.next()) {
+                locations.add(mapLocation(resultSet));
             }
         } catch (SQLException e) {
             logger.error("Cannot get locations!", e);
             throw new DaoException("Cannot get locations!", e);
+        } finally {
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(statement);
+            AutoCloseableClose.close(connection);
         }
 
         return locations;
     }
 
-    public List<Location> getLocationsByExhibitionId(long exhibitionId){
+    public List<Location> getLocationsByExhibitionId(long exhibitionId) {
         List<Location> locations = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_LOCATION_BY_EXHIBITION_ID)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_LOCATION_BY_EXHIBITION_ID);
 
             preparedStatement.setLong(1, exhibitionId);
             resultSet = preparedStatement.executeQuery();
@@ -168,30 +152,29 @@ public class LocationDaoImpl implements LocationDao {
                 locations.add(mapLocation(resultSet));
             }
 
-            for (Location location: locations) {
+            for (Location location : locations) {
                 location.setAddress(getAddressByLocationId(location.getId()));
             }
 
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("Cannot get locations by exhibition id!", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
         return locations;
     }
 
     private Map<String, String> getAddressByLocationId(long locationId) {
         Map<String, String> address = new LinkedHashMap<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(Constants.SQL_GET_ADDRESS_BY_LOCATION_ID)) {
+        try {
+            connection = dataSource.getConnection();
+            preparedStatement = connection.prepareStatement(Constants.SQL_GET_ADDRESS_BY_LOCATION_ID);
 
             preparedStatement.setLong(1, locationId);
             resultSet = preparedStatement.executeQuery();
@@ -201,15 +184,11 @@ public class LocationDaoImpl implements LocationDao {
             }
 
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("Cannot get address by location id", e);
         } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (Exception ex) {
-                    logger.error(ex);
-                }
-            }
+            AutoCloseableClose.close(resultSet);
+            AutoCloseableClose.close(preparedStatement);
+            AutoCloseableClose.close(connection);
         }
         return address;
     }
