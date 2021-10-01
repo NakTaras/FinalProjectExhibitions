@@ -302,7 +302,7 @@
                         <b><fmt:message key='index.exhibition.price'/>?</b> ${exhibition.price} <fmt:message
                                 key='index.exhibition.uah'/>
                         <c:if test="${exhibition.status == 1}">
-                            <c:if test="${user != null}">
+                            <c:if test="${user != null and exhibition.endDate.compareTo(currentDate) >= 0}">
                                 </br></br>
                                 <form action="controller" method="post">
                                     <input name="command" type="hidden" value="buyTickets">

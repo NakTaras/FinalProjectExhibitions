@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class GetExhibitionsCommand implements Command {
@@ -95,10 +96,14 @@ public class GetExhibitionsCommand implements Command {
             amountOfPages = (amountOfExhibitions / 2) + 1;
         }
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = simpleDateFormat.format(new java.util.Date());
+
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("exhibitions", exhibitions);
         httpSession.setAttribute("amountOfPages", amountOfPages);
         httpSession.setAttribute("currentPage", currentPage);
+        httpSession.setAttribute("currentDate", currentDate);
 
 
         return "index.jsp";
