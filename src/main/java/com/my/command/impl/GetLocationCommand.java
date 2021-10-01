@@ -5,6 +5,7 @@ import com.my.db.dao.LocationDao;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Location;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ public class GetLocationCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        LocationDao locationDao = LocationDaoImpl.getInstance();
+        LocationDao locationDao = LocationDaoImpl.getInstance(DataSourceUtil.getDataSource());
         List<Location> locations = null;
         try {
             locations = locationDao.getAllLocations();

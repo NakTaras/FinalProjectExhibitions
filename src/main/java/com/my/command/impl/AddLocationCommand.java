@@ -5,6 +5,7 @@ import com.my.db.dao.LocationDao;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Location;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class AddLocationCommand implements Command {
         location.setName(req.getParameter("locationName"));
         location.setAddress(address);
 
-        LocationDao locationDao = LocationDaoImpl.getInstance();
+        LocationDao locationDao = LocationDaoImpl.getInstance(DataSourceUtil.getDataSource());
         try {
             locationDao.saveLocation(location);
         } catch (DaoException e) {

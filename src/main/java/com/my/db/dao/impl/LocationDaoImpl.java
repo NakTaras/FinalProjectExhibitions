@@ -5,7 +5,6 @@ import com.my.db.dao.LocationDao;
 import com.my.db.entity.Location;
 import com.my.exception.DaoException;
 import com.my.util.AutoCloseableClose;
-import com.my.util.DataSourceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,13 +22,13 @@ public class LocationDaoImpl implements LocationDao {
     private static LocationDaoImpl instance;
     private DataSource dataSource;
 
-    private LocationDaoImpl() {
-        dataSource = DataSourceUtil.getDataSource();
+    private LocationDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public static synchronized LocationDaoImpl getInstance() {
+    public static synchronized LocationDaoImpl getInstance(DataSource dataSource) {
         if (instance == null) {
-            instance = new LocationDaoImpl();
+            instance = new LocationDaoImpl(dataSource);
         }
         return instance;
     }

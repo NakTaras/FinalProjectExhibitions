@@ -7,6 +7,7 @@ import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ public class GetExhibitionsCommand implements Command {
             }
         }
 
-        LocationDao locationDao = LocationDaoImpl.getInstance();
+        LocationDao locationDao = LocationDaoImpl.getInstance(DataSourceUtil.getDataSource());
         for (Exhibition exhibition : exhibitions) {
             exhibition.setLocations(locationDao.getLocationsByExhibitionId(exhibition.getId()));
             exhibition.setStartDate(String.valueOf(exhibition.getStartTimestamp()).substring(0, 10));
