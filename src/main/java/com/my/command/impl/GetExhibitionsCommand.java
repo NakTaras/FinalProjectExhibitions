@@ -24,7 +24,7 @@ public class GetExhibitionsCommand implements Command {
         String sortType = req.getParameter("sortType");
         List<Exhibition> exhibitions = null;
 
-        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
+        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         if (sortType.equals("default")) {
             try {

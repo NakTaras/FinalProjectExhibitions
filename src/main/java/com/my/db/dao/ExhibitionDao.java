@@ -30,7 +30,7 @@ public interface ExhibitionDao {
 
     int getAmountOfExhibitionsByDate(Date chosenDate) throws DaoException;
 
-    Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId);
+    int getAmountOfSoldTicketsByExhibitionId(long exhibitionId);
 
     List<Exhibition> getExhibitionsStatistics() throws DaoException;
 

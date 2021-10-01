@@ -4,6 +4,7 @@ import com.my.command.Command;
 import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ public class GetDetailedStatisticsCommand implements Command {
 
         Map<String, Integer> detailedStatistics;
         long exhibitionId = Long.parseLong(req.getParameter("exhibitionId"));
-        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
+        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         try {
             detailedStatistics = exhibitionDao.getDetailedStatisticsByExhibitionId(exhibitionId);

@@ -5,6 +5,7 @@ import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class AddExhibitionCommand implements Command {
 
         System.out.println(Arrays.toString(locationsId));
 
-        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
+        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         try {
             exhibitionDao.saveExhibition(exhibition, locationsId);

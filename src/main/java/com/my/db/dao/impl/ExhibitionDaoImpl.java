@@ -5,7 +5,6 @@ import com.my.db.dao.ExhibitionDao;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
 import com.my.util.AutoCloseableClose;
-import com.my.util.DataSourceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,13 +22,13 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     private static ExhibitionDaoImpl instance;
     private DataSource dataSource;
 
-    private ExhibitionDaoImpl() {
-        dataSource = DataSourceUtil.getDataSource();
+    private ExhibitionDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public static synchronized ExhibitionDaoImpl getInstance() {
+    public static synchronized ExhibitionDaoImpl getInstance(DataSource dataSource) {
         if (instance == null) {
-            instance = new ExhibitionDaoImpl();
+            instance = new ExhibitionDaoImpl(dataSource);
         }
         return instance;
     }
@@ -371,7 +370,7 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
     }
 
     @Override
-    public Integer getAmountOfSoldTicketsByExhibitionId(long exhibitionId) {
+    public int getAmountOfSoldTicketsByExhibitionId(long exhibitionId) {
         int amountOfSoldTickets = 0;
         Connection connection = null;
         PreparedStatement preparedStatement = null;

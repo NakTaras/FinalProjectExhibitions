@@ -5,6 +5,7 @@ import com.my.db.dao.ExhibitionDao;
 import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
+import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class CancelExhibitionCommand implements Command {
 
         List<Exhibition> exhibitions = (List<Exhibition>) httpSession.getAttribute("exhibitions");
 
-        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
+        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         for (Exhibition exhibition : exhibitions) {
             if (exhibition.getId() == canceledExhibitionId) {

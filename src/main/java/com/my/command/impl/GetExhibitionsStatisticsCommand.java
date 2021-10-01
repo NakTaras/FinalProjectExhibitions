@@ -24,7 +24,7 @@ public class GetExhibitionsStatisticsCommand implements Command {
         List<Exhibition> exhibitions;
         Integer soldTickets;
 
-        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance();
+        ExhibitionDao exhibitionDao = ExhibitionDaoImpl.getInstance(DataSourceUtil.getDataSource());
 
         try {
             exhibitions = exhibitionDao.getExhibitionsStatistics();
