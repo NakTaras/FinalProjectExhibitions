@@ -474,3 +474,111 @@
 2021-10-02 22:17:23,200 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getDetailedStatistics
 2021-10-02 22:17:23,204 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
 2021-10-02 22:18:40,984 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-10-02 22:33:44,058 INFO c.m.s.Controller [http-nio-8080-exec-9] HelloServlet.init
+2021-10-02 22:33:44,066 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> logIn
+2021-10-02 22:33:45,105 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-10-02 22:33:47,576 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getLocations
+2021-10-02 22:33:47,600 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> jsp/admin/addExhibition.jsp
+2021-10-02 22:33:47,608 INFO c.m.f.AccessFilter [http-nio-8080-exec-2] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 22:34:20,689 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doPost  commandName ==> addExhibition
+2021-10-02 22:34:20,789 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doPost   address ==> controller?command=getLocations
+2021-10-02 22:34:20,793 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getLocations
+2021-10-02 22:34:20,797 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> jsp/admin/addExhibition.jsp
+2021-10-02 22:34:20,797 INFO c.m.f.AccessFilter [http-nio-8080-exec-6] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 22:34:23,884 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:34:23,972 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> index.jsp
+2021-10-02 22:34:24,004 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-10-02 22:34:24,004 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getImg
+2021-10-02 22:34:26,181 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:34:26,221 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-10-02 22:34:26,246 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 22:34:26,250 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-10-02 22:35:58,917 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:35:58,950 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-10-02 22:35:58,982 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-10-02 22:35:58,986 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-10-02 22:36:01,741 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:36:01,765 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-10-02 22:36:01,809 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getImg
+2021-10-02 22:36:04,632 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:36:04,664 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-10-02 22:36:04,708 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-10-02 22:36:04,712 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 22:36:07,717 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:36:07,757 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-10-02 22:36:07,801 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getImg
+2021-10-02 22:36:07,801 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getImg
+2021-10-02 22:52:26,475 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitionsStatistics
+2021-10-02 22:52:26,527 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> jsp/admin/exhibitionStatistics.jsp
+2021-10-02 22:52:26,531 INFO c.m.f.AccessFilter [http-nio-8080-exec-8] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 22:52:28,353 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getDetailedStatistics
+2021-10-02 22:52:28,361 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-10-02 22:52:30,315 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> chooseLanguage
+2021-10-02 22:52:30,315 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> index.jsp
+2021-10-02 22:52:30,383 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-10-02 22:52:30,387 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getImg
+2021-10-02 22:52:31,922 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getExhibitionsStatistics
+2021-10-02 22:52:31,978 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> jsp/admin/exhibitionStatistics.jsp
+2021-10-02 22:52:31,982 INFO c.m.f.AccessFilter [http-nio-8080-exec-6] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 22:52:33,942 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getDetailedStatistics
+2021-10-02 22:52:33,946 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> jsp/admin/detailedStatistics.jsp
+2021-10-02 22:56:07,733 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 22:56:07,769 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   address ==> index.jsp
+2021-10-02 22:56:07,813 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 22:56:07,813 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-10-02 22:56:13,178 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> chooseLanguage
+2021-10-02 22:56:13,182 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-10-02 22:56:13,238 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getImg
+2021-10-02 22:56:13,262 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-10-02 23:16:15,972 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-10-02 23:16:38,131 INFO c.m.s.Controller [http-nio-8080-exec-9] HelloServlet.init
+2021-10-02 23:16:38,155 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 23:16:39,080 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-10-02 23:16:39,132 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 23:16:39,132 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-10-02 23:16:46,819 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> logIn
+2021-10-02 23:16:46,827 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> index.jsp
+2021-10-02 23:16:46,863 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> getImg
+2021-10-02 23:16:46,863 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getImg
+2021-10-02 23:16:58,494 INFO c.m.f.AccessFilter [http-nio-8080-exec-6] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 23:17:15,572 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> chooseLanguage
+2021-10-02 23:17:15,576 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   address ==> index.jsp
+2021-10-02 23:17:15,640 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 23:17:15,644 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-10-02 23:17:17,834 INFO c.m.f.AccessFilter [http-nio-8080-exec-2] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 23:27:30,966 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-10-02 23:28:47,257 INFO c.m.s.Controller [http-nio-8080-exec-1] HelloServlet.init
+2021-10-02 23:28:47,281 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 23:28:48,030 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   address ==> index.jsp
+2021-10-02 23:28:48,058 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg
+2021-10-02 23:28:48,058 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> getImg
+2021-10-02 23:28:49,912 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   commandName ==> chooseLanguage
+2021-10-02 23:28:49,912 INFO c.m.s.Controller [http-nio-8080-exec-4] Controller.doGet   address ==> index.jsp
+2021-10-02 23:28:49,968 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-10-02 23:28:49,968 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-10-02 23:30:25,376 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-10-02 23:31:12,053 INFO c.m.s.Controller [http-nio-8080-exec-2] HelloServlet.init
+2021-10-02 23:31:12,081 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> chooseLanguage
+2021-10-02 23:31:12,125 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   address ==> index.jsp
+2021-10-02 23:31:18,730 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 23:31:19,403 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   address ==> index.jsp
+2021-10-02 23:31:19,423 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-10-02 23:31:19,427 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getImg
+2021-10-02 23:31:24,846 INFO c.m.s.Controller [main] HelloServlet.destroy
+2021-10-02 23:31:53,627 INFO c.m.s.Controller [http-nio-8080-exec-8] HelloServlet.init
+2021-10-02 23:31:53,655 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 23:31:54,531 INFO c.m.s.Controller [http-nio-8080-exec-8] Controller.doGet   address ==> index.jsp
+2021-10-02 23:31:54,555 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getImg
+2021-10-02 23:31:54,555 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doGet   commandName ==> getImg
+2021-10-02 23:32:17,307 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   commandName ==> logIn
+2021-10-02 23:32:17,315 INFO c.m.s.Controller [http-nio-8080-exec-3] Controller.doGet   address ==> index.jsp
+2021-10-02 23:32:17,343 INFO c.m.s.Controller [http-nio-8080-exec-5] Controller.doGet   commandName ==> getImg
+2021-10-02 23:32:17,343 INFO c.m.s.Controller [http-nio-8080-exec-6] Controller.doGet   commandName ==> getImg
+2021-10-02 23:32:20,448 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   commandName ==> getLocations
+2021-10-02 23:32:20,452 INFO c.m.s.Controller [http-nio-8080-exec-7] Controller.doGet   address ==> jsp/admin/addExhibition.jsp
+2021-10-02 23:32:20,460 INFO c.m.f.AccessFilter [http-nio-8080-exec-8] AccessFilter.doFilter  User ==> User{id=1, login='admin', role='administrator'}
+2021-10-02 23:32:23,886 INFO c.m.s.Controller [http-nio-8080-exec-10] Controller.doPost  commandName ==> addExhibition
+2021-10-02 23:32:29,694 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   commandName ==> getExhibitions
+2021-10-02 23:32:29,734 INFO c.m.s.Controller [http-nio-8080-exec-9] Controller.doGet   address ==> index.jsp
+2021-10-02 23:32:29,758 INFO c.m.s.Controller [http-nio-8080-exec-1] Controller.doGet   commandName ==> getImg
+2021-10-02 23:32:29,762 INFO c.m.s.Controller [http-nio-8080-exec-2] Controller.doGet   commandName ==> getImg

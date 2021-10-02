@@ -7,6 +7,7 @@ import com.my.db.dao.impl.ExhibitionDaoImpl;
 import com.my.db.dao.impl.LocationDaoImpl;
 import com.my.db.entity.Exhibition;
 import com.my.exception.DaoException;
+import com.my.util.CurrentDate;
 import com.my.util.DataSourceUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,14 +98,11 @@ public class GetExhibitionsCommand implements Command {
             amountOfPages = (amountOfExhibitions / 2) + 1;
         }
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = simpleDateFormat.format(new java.util.Date());
-
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute("exhibitions", exhibitions);
         httpSession.setAttribute("amountOfPages", amountOfPages);
         httpSession.setAttribute("currentPage", currentPage);
-        httpSession.setAttribute("currentDate", currentDate);
+        httpSession.setAttribute("currentDate", CurrentDate.getCurrentDate());
 
 
         return "index.jsp";

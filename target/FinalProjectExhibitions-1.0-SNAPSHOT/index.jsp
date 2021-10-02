@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="/WEB-INF/tld/customTagTib.tld" prefix="mytag"%>
 
 <c:if test="${empty language}">
     <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
@@ -309,11 +308,11 @@
                                     <input name="command" type="hidden" value="buyTickets">
                                     <label><b><fmt:message key='index.exhibition.howMany'/></b></label></br>
                                     <input type="number" name="amountOfTickets" step="1" value="1" min="1"></br>
-                                    <label><b>Do you want to get confirmation on email?</b></label>
+                                    <label><b><fmt:message key='index.exhibition.confirmationOnEmail'/></b></label>
                                     <input type="checkbox" id="hasEmail${i}" onclick="showEmailInput(${i})"></br>
                                     <div id="email${i}">
-                                        <label><b>Input your email</b></label></br>
-                                        <input type="text" placeholder="Email" name="email">
+                                        <label><b><fmt:message key='index.exhibition.inputEmail'/></b></label></br>
+                                        <input type="text" placeholder="<fmt:message key='index.exhibition.email'/>" name="email">
                                         <input name="exhibitionTopic" type="hidden" value="${exhibition.topic}">
                                     </div>
                                     <input name="exhibitionId" type="hidden" value="${exhibition.id}">

@@ -1,10 +1,22 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<c:if test="${empty language}">
+    <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
+</c:if>
+<c:if test="${!empty language}">
+    <fmt:setLocale value="${language}" scope="session"/>
+</c:if>
+
+<fmt:setBundle basename="resources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>(404) The page doesn't exist.</title>
-    <link rel="stylesheet" type="text/css" href="//cloud.typography.com/746852/739588/css/fonts.css" />
-    <style type="text/css">
+    <style>
         body {
             margin: 0;
             padding: 0;
@@ -57,7 +69,7 @@
 
 <div class="error-container">
     <h1>404</h1>
-    <p class="return">Take me back to <a href="http://localhost:8080/FinalProjectExhibitions_war_exploded/controller?command=getExhibitions&pageNum=1&sortType=default">Home page</a></p>
+    <p class="return"><fmt:message key='error.returnTo'/> <a href="http://localhost:8080/FinalProjectExhibitions_war_exploded/controller?command=getExhibitions&pageNum=1&sortType=default"><fmt:message key='error.homePage'/></a></p>
 </div>
 
 </body>
