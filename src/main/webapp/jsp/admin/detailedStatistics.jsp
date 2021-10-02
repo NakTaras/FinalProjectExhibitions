@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/customTagLib.tld" prefix="customTag" %>
 
 <c:if test="${empty language}">
     <c:set var="language" scope="session" value="${pageContext.request.locale.language}"/>
@@ -189,18 +190,22 @@
 <h1><fmt:message key='detailedStatistics.topic'/> "${param.exhibitionTopic}"</h1>
 <hr>
 
-<table class="detailed-statistic">
-    <tr>
+<%--<table class="detailed-statistic">--%>
+<%--    <tr>--%>
+<%--        <th><fmt:message key='detailedStatistics.table.userLogin'/></th>--%>
+<%--        <th><fmt:message key='detailedStatistics.table.numberOfBoughtTickets'/></th>--%>
+<%--    </tr>--%>
+<%--    <c:forEach items="${detailedStatistics}" var="statistics">--%>
+<%--        <tr>--%>
+<%--            <td>${statistics.key}</td>--%>
+<%--            <td>${statistics.value}</td>--%>
+<%--        </tr>--%>
+<%--    </c:forEach>--%>
+<%--</table>--%>
+    <customTag:detailedStatistics detailedStatistics="${detailedStatistics}">
         <th><fmt:message key='detailedStatistics.table.userLogin'/></th>
         <th><fmt:message key='detailedStatistics.table.numberOfBoughtTickets'/></th>
-    </tr>
-    <c:forEach items="${detailedStatistics}" var="statistics">
-        <tr>
-            <td>${statistics.key}</td>
-            <td>${statistics.value}</td>
-        </tr>
-    </c:forEach>
-</table>
+    </customTag:detailedStatistics>
 
 </body>
 </html>

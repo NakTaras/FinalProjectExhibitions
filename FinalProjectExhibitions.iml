@@ -42,5 +42,6 @@
     <orderEntry type="library" name="Maven: com.sun.mail:smtp:1.6.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:mailapi:1.6.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.0" level="project" />
   </component>
 </module>
