@@ -1,11 +1,17 @@
 package com.my.tag;
 
+import com.my.db.dao.impl.LocationDaoImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import java.io.IOException;
 import java.util.Map;
 
 public class DetailedStatisticsTag extends BodyTagSupport {
+
+    private static final Logger logger = LogManager.getLogger(DetailedStatisticsTag.class);
 
     private static final long serialVersionUID = -3967298211706329499L;
 
@@ -29,10 +35,15 @@ public class DetailedStatisticsTag extends BodyTagSupport {
     public int doAfterBody() throws JspTagException {
         try {
             pageContext.getOut().write("</tr>");
-            for (Map.Entry<String, Integer> detailedStatisticsEntry : detailedStatistics.entrySet()) {
-                pageContext.getOut().write("<tr><td>" + detailedStatisticsEntry.getKey() + "</td><td>" + detailedStatisticsEntry.getValue() + "</td></tr>");
-            }
+            detailedStatistics.forEach((key, value) -> {
+                try {
+                    pageContext.getOut().write("<tr><td>" + key + "</td><td>" + value + "</td></tr>");
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            });
         } catch (IOException e) {
+            logger.error(e);
             throw new JspTagException(e.getMessage());
         }
         return SKIP_BODY;
@@ -42,6 +53,7 @@ public class DetailedStatisticsTag extends BodyTagSupport {
         try {
             pageContext.getOut().write("</table>");
         } catch (IOException e) {
+            logger.error(e);
             throw new JspTagException(e.getMessage());
         }
         return SKIP_BODY;
