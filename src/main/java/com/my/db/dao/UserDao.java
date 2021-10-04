@@ -16,10 +16,9 @@ public interface UserDao {
     void saveUser(User user) throws DaoException;
 
     /**
-     * The method gets information about the user to the database.
+     * The method gets information about the user from the database.
      * @param login - user login.
      * @param password - user password.
-     * @throws DaoException when the user could not be got from the database.
      */
     User getUserByLogin(String login, String password);
 

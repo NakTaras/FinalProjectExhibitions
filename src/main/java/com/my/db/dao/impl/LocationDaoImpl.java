@@ -15,17 +15,42 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class LocationDaoImpl is used to access information about locations from the database.
+ * Class LocationDaoImpl implements interface LocationDao.
+ *
+ * @author Taras Nakonechnyi
+ */
 public class LocationDaoImpl implements LocationDao {
 
     private static final Logger logger = LogManager.getLogger(LocationDaoImpl.class);
 
+    /**
+     * Singleton object of class LocationDaoImpl
+     */
     private static LocationDaoImpl instance;
+
+    /**
+     * A factory for connections to the database
+     */
     private DataSource dataSource;
 
+    /**
+     * The private constructor that called from the method getInstance.
+     * It should be called exactly once when the first time the method getInstance is called.
+     *
+     * @param dataSource - factory for connections to the database
+     */
     private LocationDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Static method that create instance and call private constructor when the first time the method is called.
+     *
+     * @param dataSource - factory for connections to the database.
+     * @return instance - Singleton object of class LocationDaoImpl
+     */
     public static synchronized LocationDaoImpl getInstance(DataSource dataSource) {
         if (instance == null) {
             instance = new LocationDaoImpl(dataSource);
@@ -83,7 +108,14 @@ public class LocationDaoImpl implements LocationDao {
         }
     }
 
-
+    /**
+     * The method adds information about the location`s address to the database.
+     * @param connection - connection with transaction that was created in saveLocation.
+     * @param locationId - id of the location which address we want to add to the database.
+     * @param language   - address language.
+     * @param address   - location address.
+     * @throws DaoException when the location address could not be saved to the database.
+     */
     private void addLocationAddress(Connection connection, long locationId, String language, String address) throws DaoException {
         PreparedStatement preparedStatement = null;
 
@@ -134,6 +166,7 @@ public class LocationDaoImpl implements LocationDao {
         return locations;
     }
 
+    @Override
     public List<Location> getLocationsByExhibitionId(long exhibitionId) {
         List<Location> locations = new ArrayList<>();
         Connection connection = null;
@@ -165,6 +198,11 @@ public class LocationDaoImpl implements LocationDao {
         return locations;
     }
 
+    /**
+     * The method get information about the location address from the database.
+     * @param locationId - id of the location which address we want to get from the database.
+     * @return map with address languages and addresses.
+     */
     private Map<String, String> getAddressByLocationId(long locationId) {
         Map<String, String> address = new LinkedHashMap<>();
         Connection connection = null;
@@ -192,6 +230,11 @@ public class LocationDaoImpl implements LocationDao {
         return address;
     }
 
+    /**
+     * The method set information about the location into the object of class Location.
+     * @param rs - ResultSet with information about the location from the database.
+     * @return object of class Location with information about the location.
+     */
     private Location mapLocation(ResultSet rs) throws SQLException {
         Location location = new Location();
         location.setId(rs.getLong(Constants.SQL_FIELD_ID));

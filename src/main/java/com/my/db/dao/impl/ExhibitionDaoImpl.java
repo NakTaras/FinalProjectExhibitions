@@ -15,17 +15,42 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class ExhibitionDaoImpl is used to access information about exhibitions from the database.
+ * Class ExhibitionDaoImpl implements interface ExhibitionDao.
+ *
+ * @author Taras Nakonechnyi
+ */
 public class ExhibitionDaoImpl implements ExhibitionDao {
 
     private static final Logger logger = LogManager.getLogger(LocationDaoImpl.class);
 
+    /**
+     * Singleton object of class ExhibitionDaoImpl
+     */
     private static ExhibitionDaoImpl instance;
+
+    /**
+     * A factory for connections to the database
+     */
     private DataSource dataSource;
 
+    /**
+     * The private constructor that called from the method getInstance.
+     * It should be called exactly once when the first time the method getInstance is called.
+     *
+     * @param dataSource - factory for connections to the database
+     */
     private ExhibitionDaoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Static method that create instance and call private constructor when the first time the method is called.
+     *
+     * @param dataSource - factory for connections to the database.
+     * @return instance - Singleton object of class ExhibitionDaoImpl
+     */
     public static synchronized ExhibitionDaoImpl getInstance(DataSource dataSource) {
         if (instance == null) {
             instance = new ExhibitionDaoImpl(dataSource);
@@ -116,6 +141,11 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         return exhibition;
     }
 
+    /**
+     * The method set information about the exhibition into the object of class Exhibition.
+     * @param rs - ResultSet with information about the exhibition from the database.
+     * @return object of class Exhibition with information about the exhibition.
+     */
     private Exhibition mapExhibition(ResultSet rs) throws SQLException {
         Exhibition exhibition = new Exhibition();
         exhibition.setId(rs.getLong(Constants.SQL_FIELD_ID));
@@ -272,8 +302,14 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
         return exhibitions;
     }
 
-    @Override
-    public void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws DaoException {
+    /**
+     * The method adds information about the location where the exhibition takes place to the database.
+     * @param connection - connection with transaction that was created in saveExhibition.
+     * @param exhibitionId   - exhibition id.
+     * @param locationId - id of the location where the exhibition takes place we want to add to the database.
+     * @throws DaoException when the exhibition and location where the exhibition takes place could not be saved to the database.
+     */
+    private void setRowToExhibitionHasLocation(Connection connection, long exhibitionId, long locationId) throws DaoException {
         PreparedStatement preparedStatement = null;
 
         try {
@@ -454,6 +490,11 @@ public class ExhibitionDaoImpl implements ExhibitionDao {
 
     }
 
+    /**
+     * The method set information about the exhibition statistic into the object of class Exhibition.
+     * @param rs - ResultSet with information about the exhibition statistic from the database.
+     * @return object of class Exhibition with information about the exhibition statistic.
+     */
     private Exhibition mapExhibitionStatistic(ResultSet rs) throws SQLException {
         Exhibition exhibition = new Exhibition();
         exhibition.setId(rs.getLong(Constants.SQL_FIELD_ID));

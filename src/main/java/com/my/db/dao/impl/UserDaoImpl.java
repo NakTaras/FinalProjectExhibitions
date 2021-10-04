@@ -4,16 +4,13 @@ import com.my.db.constant.Constants;
 import com.my.db.dao.UserDao;
 import com.my.db.entity.User;
 import com.my.exception.DaoException;
-import com.my.servlet.Controller;
 import com.my.util.AutoCloseableClose;
-import com.my.util.DataSourceUtil;
 import com.my.util.PasswordEncryption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.List;
 
 /**
  * Class UserDaoImpl is used to access information about users from the database.
